@@ -1,1320 +1,1399 @@
--- Exporting to the f3x servers directly
--- Custom export arranged by Humilitating (from the help of a few sources)
--- If you're looking to import as well: https://pastebin.com/raw/VgLTQ3Nu
+	F3XCollection = Instance.new("ScreenGui")
+	F3XCollection.Name = "F3XCollection"
+	-------
+	MFrame = Instance.new("Frame")
+	MFrame.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+	MFrame.BackgroundTransparency = 0.5
+	MFrame.BorderSizePixel = 0
+	MFrame.Name = "MFrame"
+	MFrame.Position = UDim2.new(0.510268569, 0, 0.519677997, 0)
+	MFrame.Size = UDim2.new(0, 400, 0, 524)
+	MFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+	MFrame.Parent = F3XCollection
+	-------
+	UIGradient3 = Instance.new("UIGradient")
+	UIGradient3.Enabled = true
+	UIGradient3.Offset = Vector2.new(0, 0)
+	UIGradient3.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)),ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1))}
+	UIGradient3.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 1, 0),NumberSequenceKeypoint.new(0.25, 1, 0),NumberSequenceKeypoint.new(0.5, 1, 0),NumberSequenceKeypoint.new(0.8435582518577576, 1, 0),NumberSequenceKeypoint.new(1, 0.30000001192092896, 0)}
+	UIGradient3.Rotation = 45
+	UIGradient3.Parent = MFrame
+	-------
+	Header4 = Instance.new("Frame")
+	Header4.BackgroundColor3 = Color3.new(0.266667, 0.266667, 0.266667)
+	Header4.Name = "Header"
+	Header4.Position = UDim2.new(0.5, 0, 0.0127272727, 0)
+	Header4.Size = UDim2.new(0.966292143, 0, 0.0485714301, 0)
+	Header4.AnchorPoint = Vector2.new(0.5, 0)
+	Header4.Parent = MFrame
+	-------
+	UICorner5 = Instance.new("UICorner")
+	UICorner5.CornerRadius = UDim.new(0, 4)
+	UICorner5.Parent = Header4
+	-------
+	Folder6 = Instance.new("Folder")
+	Folder6.Name = "Folder"
+	Folder6.Parent = Header4
+	-------
+	border7 = Instance.new("ImageLabel")
+	border7.Active = false
+	border7.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border7.BackgroundTransparency = 1
+	border7.Name = "border"
+	border7.AnchorPoint = Vector2.new(0, 0)
+	border7.Selectable = false
+	border7.Size = UDim2.new(1, 0, 1, 0)
+	border7.AnchorPoint = Vector2.new(0, 0)
+	border7.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border7.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border7.ImageTransparency = 0.5
+	border7.ScaleType = Enum.ScaleType.Slice
+	border7.SliceCenter = Rect.new(4, 4, 5, 5)
+	border7.Parent = Folder6
+	-------
+	Minimize8 = Instance.new("TextButton")
+	Minimize8.Active = true
+	Minimize8.BackgroundColor3 = Color3.new(1, 1, 1)
+	Minimize8.BackgroundTransparency = 1
+	Minimize8.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Minimize8.Name = "Minimize"
+	Minimize8.Position = UDim2.new(0.917999983, 0, 0.882352948, 0)
+	Minimize8.Selectable = true
+	Minimize8.AnchorPoint = Vector2.new(0, 1)
+	Minimize8.Size = UDim2.new(0.0800556839, 0, 0.927934349, 0)
+	Minimize8.Style = Enum.ButtonStyle.Custom
+	Minimize8.ZIndex = 2
+	Minimize8.Font = Enum.Font.Cartoon
+	Minimize8.TextSize = 20
+	Minimize8.Text = '-'
+	Minimize8.TextColor3 = Color3.new(1, 1, 1)
+	Minimize8.TextScaled = true
+	Minimize8.TextWrapped = true
+	Minimize8.Parent = Header4
+	-------
+	Title9 = Instance.new("TextButton")
+	Title9.Active = true
+	Title9.BackgroundColor3 = Color3.new(1, 1, 1)
+	Title9.BackgroundTransparency = 1
+	Title9.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Title9.Name = "Title"
+	Title9.Position = UDim2.new(0.5, 0, 0.527999997, 0)
+	Title9.Selectable = true
+	Title9.AnchorPoint = Vector2.new(0.5, 0.550000012)
+	Title9.Size = UDim2.new(1, 0, 0.959999979, 0)
+	Title9.Style = Enum.ButtonStyle.Custom
+	Title9.Font = Enum.Font.SourceSansBold
+	Title9.TextSize = 14
+	Title9.Text = 'F3X Codes Collection'
+	Title9.TextColor3 = Color3.new(1, 1, 1)
+	Title9.TextScaled = true
+	Title9.TextWrapped = true
+	Title9.Parent = Header4
+	-------
+	RecycleBin10 = Instance.new("ImageButton")
+	RecycleBin10.BackgroundColor3 = Color3.new(1, 1, 1)
+	RecycleBin10.BackgroundTransparency = 1
+	RecycleBin10.Name = "RecycleBin"
+	RecycleBin10.Position = UDim2.new(0.00999999978, 0, 0.5, 0)
+	RecycleBin10.AnchorPoint = Vector2.new(0, 0.5)
+	RecycleBin10.AnchorPoint = Vector2.new(0, 0.5)
+	RecycleBin10.Size = UDim2.new(0.0549850538, 0, 0.846320093, 0)
+	RecycleBin10.Style = Enum.ButtonStyle.Custom
+	RecycleBin10.ZIndex = 2
+	RecycleBin10.Image = "http://www.roblox.com/asset/?id=10187593425"
+	RecycleBin10.ImageColor3 = Color3.new(1, 1, 1)
+	RecycleBin10.ImageTransparency = 0
+	RecycleBin10.ScaleType = Enum.ScaleType.Fit
+	RecycleBin10.SliceCenter = Rect.new(0, 0, 0, 0)
+	RecycleBin10.Parent = Header4
+	-------
+	Main11 = Instance.new("Frame")
+	Main11.BackgroundColor3 = Color3.new(1, 1, 1)
+	Main11.Name = "Main"
+	Main11.Position = UDim2.new(0.5, 0, 0.99000001, 0)
+	Main11.Size = UDim2.new(0.966000021, 0, 0.939999998, 0)
+	Main11.ZIndex = 0
+	Main11.AnchorPoint = Vector2.new(0.5, 1)
+	Main11.Parent = MFrame
+	-------
+	UICorner12 = Instance.new("UICorner")
+	UICorner12.CornerRadius = UDim.new(0, 7)
+	UICorner12.Parent = Main11
+	-------
+	SearchBoxHolder13 = Instance.new("ImageLabel")
+	SearchBoxHolder13.Active = false
+	SearchBoxHolder13.BackgroundColor3 = Color3.new(1, 1, 1)
+	SearchBoxHolder13.BackgroundTransparency = 1
+	SearchBoxHolder13.Name = "SearchBoxHolder"
+	SearchBoxHolder13.Position = UDim2.new(0.5, 0, 0.0563140102, 0)
+	SearchBoxHolder13.AnchorPoint = Vector2.new(0.5, 0)
+	SearchBoxHolder13.Selectable = false
+	SearchBoxHolder13.Size = UDim2.new(0.801474392, 0, 0.0701522902, 0)
+	SearchBoxHolder13.AnchorPoint = Vector2.new(0.5, 0)
+	SearchBoxHolder13.Image = "rbxasset://textures/AvatarImporter/img_window_BG.png"
+	SearchBoxHolder13.ImageTransparency = 0.5
+	SearchBoxHolder13.ScaleType = Enum.ScaleType.Slice
+	SearchBoxHolder13.SliceCenter = Rect.new(10, 10, 10, 10)
+	SearchBoxHolder13.Parent = Main11
+	-------
+	Box14 = Instance.new("TextBox")
+	Box14.BackgroundColor3 = Color3.new(1, 1, 1)
+	Box14.BackgroundTransparency = 1
+	Box14.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Box14.Name = "Box"
+	Box14.AnchorPoint = Vector2.new(0.5, 0.5)
+	Box14.Position = UDim2.new(0.547169805, 0, 0.5, 0)
+	Box14.Size = UDim2.new(0.856000006, 0, 0.800000012, 0)
+	Box14.Font = Enum.Font.SourceSans
+	Box14.TextSize = 14
+	Box14.Text = ''
+	Box14.PlaceholderText = [[Search creation..]]
+	Box14.TextColor3 = Color3.new(1, 1, 1)
+	Box14.TextScaled = true
+	Box14.TextWrapped = true
+	Box14.TextXAlignment = Enum.TextXAlignment.Left
+	Box14.Parent = SearchBoxHolder13
+	-------
+	UIGradient15 = Instance.new("UIGradient")
+	UIGradient15.Enabled = true
+	UIGradient15.Offset = Vector2.new(0, 0)
+	UIGradient15.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(0, 0, 0)),ColorSequenceKeypoint.new(1, Color3.new(0.32549, 0.32549, 0.32549))}
+	UIGradient15.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0, 0),NumberSequenceKeypoint.new(1, 0, 0)}
+	UIGradient15.Parent = SearchBoxHolder13
+	-------
+	SearchButton16 = Instance.new("ImageButton")
+	SearchButton16.BackgroundColor3 = Color3.new(1, 1, 1)
+	SearchButton16.BackgroundTransparency = 1
+	SearchButton16.Name = "SearchButton"
+	SearchButton16.Position = UDim2.new(0.0189999994, 0, 0, 0)
+	SearchButton16.AnchorPoint = Vector2.new(0, 0)
+	SearchButton16.AnchorPoint = Vector2.new(0, 0)
+	SearchButton16.Size = UDim2.new(0.0710000023, 0, 1.05599999, 0)
+	SearchButton16.Style = Enum.ButtonStyle.Custom
+	SearchButton16.Image = "rbxasset://textures/GameSettings/search.png"
+	SearchButton16.ImageColor3 = Color3.new(1, 1, 1)
+	SearchButton16.ImageTransparency = 0
+	SearchButton16.ScaleType = Enum.ScaleType.Fit
+	SearchButton16.SliceCenter = Rect.new(0, 0, 0, 0)
+	SearchButton16.Parent = SearchBoxHolder13
+	-------
+	Folder17 = Instance.new("Folder")
+	Folder17.Name = "Folder"
+	Folder17.Parent = SearchBoxHolder13
+	-------
+	border18 = Instance.new("ImageLabel")
+	border18.Active = false
+	border18.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border18.BackgroundTransparency = 1
+	border18.Name = "border"
+	border18.AnchorPoint = Vector2.new(0, 0)
+	border18.Selectable = false
+	border18.Size = UDim2.new(1, 0, 1, 0)
+	border18.AnchorPoint = Vector2.new(0, 0)
+	border18.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border18.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border18.ImageTransparency = 0.5
+	border18.ScaleType = Enum.ScaleType.Slice
+	border18.SliceCenter = Rect.new(4, 4, 5, 5)
+	border18.Parent = Folder17
+	-------
+	UIGradient19 = Instance.new("UIGradient")
+	UIGradient19.Enabled = true
+	UIGradient19.Offset = Vector2.new(0, 0)
+	UIGradient19.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(0.0705882, 0.0745098, 0.0862745)),ColorSequenceKeypoint.new(1, Color3.new(0.32549, 0.32549, 0.32549))}
+	UIGradient19.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0.0765027403831482, 0),NumberSequenceKeypoint.new(0.5030674934387207, 0.08743172883987427, 0),NumberSequenceKeypoint.new(1, 0.15846997499465942, 0)}
+	UIGradient19.Rotation = -56
+	UIGradient19.Parent = Main11
+	-------
+	Folder20 = Instance.new("Folder")
+	Folder20.Name = "Folder"
+	Folder20.Parent = Main11
+	-------
+	border21 = Instance.new("ImageLabel")
+	border21.Active = false
+	border21.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border21.BackgroundTransparency = 1
+	border21.Name = "border"
+	border21.AnchorPoint = Vector2.new(0, 0)
+	border21.Selectable = false
+	border21.Size = UDim2.new(1, 0, 1, 0)
+	border21.ZIndex = 0
+	border21.AnchorPoint = Vector2.new(0, 0)
+	border21.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border21.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border21.ImageTransparency = 0.5
+	border21.ScaleType = Enum.ScaleType.Slice
+	border21.SliceCenter = Rect.new(4, 4, 5, 5)
+	border21.Parent = Folder20
+	-------
+	CreationsFrame = Instance.new("ScrollingFrame")
+	CreationsFrame.Active = true
+	CreationsFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+	CreationsFrame.BackgroundTransparency = 1
+	CreationsFrame.BorderSizePixel = 0
+	CreationsFrame.Name = "CreationsFrame"
+	CreationsFrame.Position = UDim2.new(1, 0, 0.185000002, 0)
+	CreationsFrame.Selectable = true
+	CreationsFrame.Size = UDim2.new(0.953000009, 0, 0.814999998, 0)
+	CreationsFrame.ZIndex = 2
+	CreationsFrame.CanvasSize = UDim2.new(0, 0, 3, 0)
+	CreationsFrame.ScrollBarImageColor3 = Color3.new(0, 0, 0)
+	CreationsFrame.AnchorPoint = Vector2.new(1, 0)
+	CreationsFrame.ScrollBarThickness = 6
+	CreationsFrame.ClipsDescendants = true
+	CreationsFrame.Parent = Main11
+	-------
+	CreationsLayout = Instance.new("UIListLayout")
+	CreationsLayout.Name = "CreationsLayout"
+	CreationsLayout.Padding = UDim.new(0, 0)
+	CreationsLayout.FillDirection = Enum.FillDirection.Vertical
+	CreationsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	CreationsLayout.SortOrder = Enum.SortOrder.Name
+	CreationsLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	CreationsLayout.Parent = CreationsFrame
+	-------
+	Creation = Instance.new("Frame")
+	Creation.BackgroundColor3 = Color3.new(0.184314, 0.184314, 0.184314)
+	Creation.BackgroundTransparency = 0.5
+	Creation.BorderColor3 = Color3.new(0.294118, 0.294118, 0.294118)
+	Creation.Name = "Creation"
+	Creation.Position = UDim2.new(-0.330487639, 0, -0.00374310603, 0)
+	Creation.Size = UDim2.new(0.949999988, 0, 0, 40)
+	Creation.AnchorPoint = Vector2.new(0, 0)
+	Creation.Parent = CreationsLayout
+	-------
+	UICorner25 = Instance.new("UICorner")
+	UICorner25.CornerRadius = UDim.new(0, 3)
+	UICorner25.Parent = Creation
+	-------
+	Title26 = Instance.new("TextButton")
+	Title26.Active = true
+	Title26.BackgroundColor3 = Color3.new(0.184314, 0.184314, 0.184314)
+	Title26.BackgroundTransparency = 1
+	Title26.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Title26.BorderSizePixel = 0
+	Title26.Name = "Title"
+	Title26.Position = UDim2.new(0.0250000004, 0, 0, 0)
+	Title26.Selectable = true
+	Title26.AnchorPoint = Vector2.new(0, 0)
+	Title26.Size = UDim2.new(0.975000024, 0, 0.380000025, 0)
+	Title26.Style = Enum.ButtonStyle.Custom
+	Title26.Font = Enum.Font.SourceSansBold
+	Title26.TextSize = 14
+	Title26.Text = 'Doomspire Brickbattle 2.0 [Discontinued]'
+	Title26.TextColor3 = Color3.new(1, 1, 1)
+	Title26.TextScaled = true
+	Title26.TextStrokeTransparency = 0.5
+	Title26.TextWrapped = true
+	Title26.Parent = Creation
+	-------
+	Folder27 = Instance.new("Folder")
+	Folder27.Name = "Folder"
+	Folder27.Parent = Creation
+	-------
+	border28 = Instance.new("ImageLabel")
+	border28.Active = false
+	border28.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border28.BackgroundTransparency = 1
+	border28.Name = "border"
+	border28.AnchorPoint = Vector2.new(0, 0)
+	border28.Selectable = false
+	border28.Size = UDim2.new(1, 0, 1, 0)
+	border28.AnchorPoint = Vector2.new(0, 0)
+	border28.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border28.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border28.ImageTransparency = 0.5
+	border28.ScaleType = Enum.ScaleType.Slice
+	border28.SliceCenter = Rect.new(4, 4, 5, 5)
+	border28.Parent = Folder27
+	-------
+	Delete29 = Instance.new("ImageButton")
+	Delete29.BackgroundColor3 = Color3.new(1, 1, 1)
+	Delete29.BackgroundTransparency = 1
+	Delete29.Name = "Delete"
+	Delete29.Position = UDim2.new(0.352977812, 0, 1, 0)
+	Delete29.AnchorPoint = Vector2.new(0, 1)
+	Delete29.AnchorPoint = Vector2.new(0, 1)
+	Delete29.Size = UDim2.new(0.0700000003, 0, 0.620000005, 0)
+	Delete29.Style = Enum.ButtonStyle.Custom
+	Delete29.Image = "rbxasset://textures/GameSettings/delete.png"
+	Delete29.ImageColor3 = Color3.new(0.776471, 0.223529, 0.0392157)
+	Delete29.ImageTransparency = 0
+	Delete29.ScaleType = Enum.ScaleType.Fit
+	Delete29.SliceCenter = Rect.new(0, 0, 0, 0)
+	Delete29.Parent = Creation
+	-------
+	Copy = Instance.new("ImageButton")
+	Copy.BackgroundColor3 = Color3.new(1, 1, 1)
+	Copy.BackgroundTransparency = 1
+	Copy.Name = "Copy"
+	Copy.Position = UDim2.new(0.528999984, 0, 1, 0)
+	Copy.AnchorPoint = Vector2.new(0, 1)
+	Copy.AnchorPoint = Vector2.new(0, 1)
+	Copy.Size = UDim2.new(0.0700000003, 0, 0.620000005, 0)
+	Copy.Style = Enum.ButtonStyle.Custom
+	Copy.Image = "rbxasset://textures/GameSettings/copy.png"
+	Copy.ImageColor3 = Color3.new(1, 1, 1)
+	Copy.ImageTransparency = 0
+	Copy.ScaleType = Enum.ScaleType.Fit
+	Copy.SliceCenter = Rect.new(0, 0, 0, 0)
+	Copy.Parent = Creation
+	-------
+	Rename = Instance.new("ImageButton")
+	Rename.BackgroundColor3 = Color3.new(1, 1, 1)
+	Rename.BackgroundTransparency = 1
+	Rename.Name = "Rename"
+	Rename.Position = UDim2.new(0.441000015, 0, 1, 0)
+	Rename.AnchorPoint = Vector2.new(0, 1)
+	Rename.AnchorPoint = Vector2.new(0, 1)
+	Rename.Size = UDim2.new(0.0549999997, 0, 0.620000005, 0)
+	Rename.Style = Enum.ButtonStyle.Custom
+	Rename.Image = "http://www.roblox.com/asset/?id=10231271040"
+	Rename.ImageColor3 = Color3.new(1, 1, 1)
+	Rename.ImageTransparency = 0
+	Rename.ScaleType = Enum.ScaleType.Fit
+	Rename.SliceCenter = Rect.new(0, 0, 0, 0)
+	Rename.Parent = Creation
+	-------
+	Bubble = Instance.new("ImageLabel")
+	Bubble.Active = false
+	Bubble.BackgroundColor3 = Color3.new(1, 1, 1)
+	Bubble.BackgroundTransparency = 1
+	Bubble.Name = "Bubble"
+	Bubble.Position = UDim2.new(0.427536249, 0, 0.17110607, 0)
+	Bubble.AnchorPoint = Vector2.new(0, 0)
+	Bubble.Selectable = false
+	Bubble.Size = UDim2.new(0, 55, 0, 53)
+	Bubble.Visible = false
+	Bubble.AnchorPoint = Vector2.new(0, 0)
+	Bubble.Image = "http://www.roblox.com/asset/?id=10188173389"
+	Bubble.ImageColor3 = Color3.new(0.352941, 0.352941, 0.352941)
+	Bubble.ImageTransparency = 0.05000000074505806
+	Bubble.ScaleType = Enum.ScaleType.Fit
+	Bubble.SliceCenter = Rect.new(0, 0, 0, 0)
+	Bubble.Parent = Creation
+	-------
+	Info = Instance.new("ImageButton")
+	Info.BackgroundColor3 = Color3.new(1, 1, 1)
+	Info.BackgroundTransparency = 1
+	Info.Name = "Info"
+	Info.Position = UDim2.new(0.615697324, 0, 1, 0)
+	Info.Rotation = 180
+	Info.AnchorPoint = Vector2.new(0, 1)
+	Info.AnchorPoint = Vector2.new(0, 1)
+	Info.Size = UDim2.new(0.0549999997, 0, 0.620000005, 0)
+	Info.Style = Enum.ButtonStyle.Custom
+	Info.Image = "rbxasset://textures/StudioSharedUI/alert_info@2x.png"
+	Info.ImageColor3 = Color3.new(1, 1, 1)
+	Info.ImageTransparency = 0
+	Info.ScaleType = Enum.ScaleType.Fit
+	Info.SliceCenter = Rect.new(0, 0, 0, 0)
+	Info.Parent = Creation
+	-------
+	DeleteAnimation = Instance.new("LocalScript")
+	DeleteAnimation.Name = "DeleteAnimation"
+	DeleteAnimation.Disabled = false
+	DeleteAnimation.Source = [[local CollectionUI = script:FindFirstAncestorOfClass("ScreenGui")
+local settings = {}
+local TweenService = game:GetService("TweenService")
+function AbsolutePosition(Gui, AbsolutePosition)
+	local relativePosition = AbsolutePosition - Gui.Parent.AbsolutePosition
+	return UDim2.fromOffset(relativePosition.X, relativePosition.Y)
+end
+local Main = script.Parent.Parent
+local legacyWait = wait
+function wait(Time)
+	if Time then return legacyWait(Time)end
+	game:GetService"RunService".Heartbeat:Wait()
+	return true
+end
 
-local Serialization=function()
-    Serialization = {};
 
--- Import services
-local Support = function()SupportLibrary = {};
+settings.Delete_Animation = {
+	TextsAndImages_FadeAwayTween = TweenInfo.new(
+		.35,
+		Enum.EasingStyle.Quint,
+		Enum.EasingDirection.In
+	),
+	Idle_Time = .1,
+	Shake_Time = .75,
+	PositionShake_Intensity = 2,
+	RotationShake_Intensity = 1.5,
+	
+	Bubble_FreezeTime = 1,
+	Bubble_FallsToBottom = TweenInfo.new(
+		2,
+		Enum.EasingStyle.Bounce,
+		Enum.EasingDirection.Out
+	),
+	CreationArea_DisappearsTween = TweenInfo.new(
+		1,
+		Enum.EasingStyle.Sine,
+		Enum.EasingDirection.Out
+	)
+}
 
-function SupportLibrary.FindTableOccurrences(Haystack, Needle)
-	-- Returns the positions of instances of `needle` in table `haystack`
 
-	local Positions = {};
-
-	-- Add any indexes from `Haystack` that are `Needle`
-	for Index, Value in pairs(Haystack) do
-		if Value == Needle then
-			table.insert(Positions, Index);
-		end;
-	end;
-
-	return Positions;
-end;
-
-function SupportLibrary.FindTableOccurrence(Haystack, Needle)
-	-- Returns one occurrence of `Needle` in `Haystack`
-
-	-- Search for the first instance of `Needle` found and return it
-	for Index, Value in pairs(Haystack) do
-		if Value == Needle then
-			return Index;
-		end;
-	end;
-
-	-- If no occurrences exist, return `nil`
-	return nil;
-
-end;
-
-function SupportLibrary.IsInTable(Haystack, Needle)
-	-- Returns whether the given `Needle` can be found within table `Haystack`
-
-	-- Go through every value in `Haystack` and return whether `Needle` is found
-	for _, Value in pairs(Haystack) do
-		if Value == Needle then
-			return true;
-		end;
-	end;
-
-	-- If no instances were found, return false
-	return false;
-end;
-
-function SupportLibrary.DoTablesMatch(A, B)
-	-- Returns whether the values of tables A and B are the same
-
-	-- Check B table differences
-	for Index in pairs(A) do
-		if A[Index] ~= B[Index] then
-			return false;
-		end;
-	end;
-
-	-- Check A table differences
-	for Index in pairs(B) do
-		if B[Index] ~= A[Index] then
-			return false;
-		end;
-	end;
-
-	-- Return true if no differences
-	return true;
-end;
-
-function SupportLibrary.Round(Number, Places)
-	-- Returns `Number` rounded to the given number of decimal places (from lua-users)
-
-	-- Ensure that `Number` is a number
-	if type(Number) ~= 'number' then
-		return;
-	end;
-
-	-- Round the number
-	local Multiplier = 10 ^ (Places or 0);
-	local RoundedNumber = math.floor(Number * Multiplier + 0.5) / Multiplier;
-
-	-- Return the rounded number
-	return RoundedNumber;
-end;
-
-function SupportLibrary.CloneTable(Table)
-	-- Returns a copy of `Table`
-
-	local ClonedTable = {};
-
-	-- Copy all values into `ClonedTable`
-	for Key, Value in pairs(Table) do
-		ClonedTable[Key] = Value;
-	end;
-
-	-- Return the clone
-	return ClonedTable;
-end;
-
-function SupportLibrary.Merge(Target, ...)
-	-- Copies members of the given tables into the specified target table
-
-	local Tables = { ... }
-
-	-- Copy members from each table into target
-	for TableOrder, Table in ipairs(Tables) do
-		for Key, Value in pairs(Table) do
-			Target[Key] = Value
+function DeleteAnimation(Creation)
+	local DeleteAnimationInfo = settings.Delete_Animation
+	local Pop = Instance.new("Sound")
+	Pop.SoundId = "rbxassetid://8074691936"
+	Pop.Parent = CollectionUI
+	
+	local Tween
+	for _,GuiObject in pairs(Creation:GetDescendants()) do
+		if GuiObject:IsA"GuiObject" then
+			coroutine.wrap(function()
+				local TransparencyProperty = pcall(function()GuiObject.TextTransparency=GuiObject.TextTransparency end)and "TextTransparency"or pcall(function()GuiObject.ImageTransparency=GuiObject.ImageTransparency end) and "ImageTransparency" or "BackgroundTransparency"
+				
+				if TransparencyProperty then
+					TweenService:Create(
+						GuiObject,
+						DeleteAnimationInfo.TextsAndImages_FadeAwayTween,
+						{[TransparencyProperty] = 1}
+					):Play()
+				end
+			end)()
 		end
 	end
+	wait(DeleteAnimationInfo.TextsAndImages_FadeAwayTween.Time + DeleteAnimationInfo.Idle_Time)
 
-	-- Return target
-	return Target
+	local creationReplica = Creation:Clone() -- We make a replica and parent it somewhere else to have more control [against UIListLayout / UIGridLayout]
+	local Bubble = creationReplica.Bubble
+	Bubble.ImageTransparency=.999
+	Bubble.Visible = true
+	Creation.Visible = false
+	
+	creationReplica.Parent = Main
+	creationReplica.Size = UDim2.new(0, Creation.AbsoluteSize.X, 0, Creation.AbsoluteSize.Y)
+	creationReplica.Position = AbsolutePosition(creationReplica, Creation.AbsolutePosition)
+	local NormalReplicaPosition = creationReplica.Position
+	local Tick = tick()
+	local pIntensity = DeleteAnimationInfo.PositionShake_Intensity
+	local rIntensity= DeleteAnimationInfo.RotationShake_Intensity
+	
+	while tick()-Tick<DeleteAnimationInfo.Shake_Time do
+		creationReplica.Position = NormalReplicaPosition + UDim2.new(0, math.random(-pIntensity, pIntensity), 0, math.random(-pIntensity, pIntensity))
+		creationReplica.Rotation = math.random(-rIntensity, rIntensity)
+		wait()
+	end
+	Bubble.ImageTransparency = .05
+	Bubble.Parent = creationReplica.Parent
+	Bubble.Position = UDim2.new(UDim.new(.5,0), creationReplica.Position.Y)
+	Bubble.AnchorPoint = Vector2.new(.5, 0)
+	
+	creationReplica.Visible = false
+	wait(DeleteAnimationInfo.Bubble_FreezeTime)
+	
+	Tween = TweenService:Create(
+		Bubble,
+		DeleteAnimationInfo.Bubble_FallsToBottom,
+		{
+			AnchorPoint = Vector2.new(Bubble.AnchorPoint.X, 1),
+			Position = UDim2.new(Bubble.Position.X, UDim.new(1, 0))
+		}
+	)
+	Tween:Play()
+	wait(Tween.TweenInfo.Time-.5)
+	Pop:Play()
+	wait(1)
+	Bubble:Destroy()
+	
+	wait(10)
+	Tween = TweenService:Create(
+		Creation,
+		settings.Delete_Animation.CreationArea_DisappearsTween,
+		{Size = UDim2.fromScale(0,0)}
+	)
+	Tween:Play()
+	Tween.Completed:Wait()
+	Creation:Destroy()
+end
+local T=tick()
+repeat wait(1)print(tick()-T)until tick()-T>=10
+DeleteAnimation(script.Parent.Creation)]]
+	DeleteAnimation.Parent = CreationsFrame
+	-------
+	IntroFrame = Instance.new("Frame")
+	IntroFrame.BackgroundColor3 = Color3.new(0.266667, 0.266667, 0.266667)
+	IntroFrame.BackgroundTransparency = 1
+	IntroFrame.Name = "IntroFrame"
+	IntroFrame.Position = UDim2.new(0.5, 0, -0.0350000001, 0)
+	IntroFrame.Size = UDim2.new(0.966292143, 0, 0.0485714301, 0)
+	IntroFrame.AnchorPoint = Vector2.new(0.5, 0)
+	IntroFrame.Parent = Main11
+	-------
+	Title36 = Instance.new("TextButton")
+	Title36.Active = true
+	Title36.BackgroundColor3 = Color3.new(1, 1, 1)
+	Title36.BackgroundTransparency = 1
+	Title36.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Title36.Name = "Title"
+	Title36.Position = UDim2.new(0, 186, 0, 203)
+	Title36.Selectable = true
+	Title36.AnchorPoint = Vector2.new(0.5, 0.550000012)
+	Title36.Size = UDim2.new(0.929359853, 0, 3.09308386, 0)
+	Title36.Style = Enum.ButtonStyle.Custom
+	Title36.Font = Enum.Font.SourceSansBold
+	Title36.TextSize = 14
+	Title36.Text = 'F3X Codes Collection'
+	Title36.TextColor3 = Color3.new(1, 1, 1)
+	Title36.TextScaled = true
+	Title36.TextTransparency = 1
+	Title36.TextWrapped = true
+	Title36.Parent = IntroFrame
+	-------
+	Context1 = Instance.new("TextButton")
+	Context1.Active = true
+	Context1.BackgroundColor3 = Color3.new(1, 1, 1)
+	Context1.BackgroundTransparency = 1
+	Context1.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Context1.Name = "Context1"
+	Context1.Position = UDim2.new(0, 15, 0, 237)
+	Context1.Selectable = true
+	Context1.AnchorPoint = Vector2.new(0, 0)
+	Context1.Size = UDim2.new(0.929359853, 0, 0.710573316, 0)
+	Context1.Style = Enum.ButtonStyle.Custom
+	Context1.Font = Enum.Font.SourceSansBold
+	Context1.TextSize = 14
+	Context1.Text = 'Keep track of all your creation codes'
+	Context1.TextColor3 = Color3.new(1, 1, 1)
+	Context1.TextScaled = true
+	Context1.TextTransparency = 1
+	Context1.TextWrapped = true
+	Context1.Parent = IntroFrame
+	-------
+	Context2 = Instance.new("TextButton")
+	Context2.Active = true
+	Context2.BackgroundColor3 = Color3.new(1, 1, 1)
+	Context2.BackgroundTransparency = 1
+	Context2.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Context2.Name = "Context2"
+	Context2.Position = UDim2.new(0, 278, 0, 23)
+	Context2.Selectable = true
+	Context2.AnchorPoint = Vector2.new(0, 0)
+	Context2.Size = UDim2.new(0.270505339, 0, 0.710573316, 0)
+	Context2.Style = Enum.ButtonStyle.Custom
+	Context2.Font = Enum.Font.SourceSansBold
+	Context2.TextSize = 14
+	Context2.Text = 'By Humilitating'
+	Context2.TextColor3 = Color3.new(1, 1, 1)
+	Context2.TextScaled = true
+	Context2.TextTransparency = 1
+	Context2.TextWrapped = true
+	Context2.TextXAlignment = Enum.TextXAlignment.Left
+	Context2.Parent = IntroFrame
+	-------
+	ScrollBG39 = Instance.new("Frame")
+	ScrollBG39.BackgroundColor3 = Color3.new(0.180392, 0.2, 0.219608)
+	ScrollBG39.Name = "ScrollBG"
+	ScrollBG39.Position = UDim2.new(1, 0, 1, 0)
+	ScrollBG39.Size = UDim2.new(0, 6, 0.813000023, 0)
+	ScrollBG39.AnchorPoint = Vector2.new(1, 1)
+	ScrollBG39.Parent = Main11
+	-------
+	UICorner40 = Instance.new("UICorner")
+	UICorner40.CornerRadius = UDim.new(0, 8)
+	UICorner40.Parent = ScrollBG39
+	-------
+	ResizePoint41 = Instance.new("TextButton")
+	ResizePoint41.Active = true
+	ResizePoint41.BackgroundColor3 = Color3.new(0, 0, 0)
+	ResizePoint41.BackgroundTransparency = 0.5
+	ResizePoint41.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	ResizePoint41.Name = "ResizePoint"
+	ResizePoint41.Position = UDim2.new(1, 0, 1, 0)
+	ResizePoint41.Selectable = true
+	ResizePoint41.AnchorPoint = Vector2.new(1, 1)
+	ResizePoint41.Size = UDim2.new(0, 10, 0, 10)
+	ResizePoint41.Style = Enum.ButtonStyle.Custom
+	ResizePoint41.Font = Enum.Font.SourceSans
+	ResizePoint41.TextSize = 14
+	ResizePoint41.Text = ''
+	ResizePoint41.TextColor3 = Color3.new(0, 0, 0)
+	ResizePoint41.Parent = MFrame
+	-------
+	RecycleBin42 = Instance.new("Frame")
+	RecycleBin42.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+	RecycleBin42.BackgroundTransparency = 0.5
+	RecycleBin42.BorderSizePixel = 0
+	RecycleBin42.Name = "RecycleBin"
+	RecycleBin42.Position = UDim2.new(0.5, 0, 0.5, 0)
+	RecycleBin42.Size = UDim2.new(0, 500, 0, 350)
+	RecycleBin42.Visible = false
+	RecycleBin42.ZIndex = 2
+	RecycleBin42.AnchorPoint = Vector2.new(0.5, 0.5)
+	RecycleBin42.Parent = F3XCollection
+	-------
+	Main43 = Instance.new("Frame")
+	Main43.BackgroundColor3 = Color3.new(1, 1, 1)
+	Main43.Name = "Main"
+	Main43.Position = UDim2.new(0.5, 0, 0.99000001, 0)
+	Main43.Size = UDim2.new(0.966000021, 0, 0.939999998, 0)
+	Main43.ZIndex = 2
+	Main43.AnchorPoint = Vector2.new(0.5, 1)
+	Main43.Parent = RecycleBin42
+	-------
+	UICorner44 = Instance.new("UICorner")
+	UICorner44.CornerRadius = UDim.new(0, 7)
+	UICorner44.Parent = Main43
+	-------
+	SearchBoxHolder45 = Instance.new("ImageLabel")
+	SearchBoxHolder45.Active = false
+	SearchBoxHolder45.BackgroundColor3 = Color3.new(1, 1, 1)
+	SearchBoxHolder45.BackgroundTransparency = 1
+	SearchBoxHolder45.Name = "SearchBoxHolder"
+	SearchBoxHolder45.Position = UDim2.new(0.5, 0, 0.068472065, 0)
+	SearchBoxHolder45.AnchorPoint = Vector2.new(0.5, 0)
+	SearchBoxHolder45.Selectable = false
+	SearchBoxHolder45.Size = UDim2.new(0.600000024, 0, 0.0700000003, 0)
+	SearchBoxHolder45.ZIndex = 2
+	SearchBoxHolder45.AnchorPoint = Vector2.new(0.5, 0)
+	SearchBoxHolder45.Image = "rbxasset://textures/AvatarImporter/img_window_BG.png"
+	SearchBoxHolder45.ImageTransparency = 0.5
+	SearchBoxHolder45.ScaleType = Enum.ScaleType.Slice
+	SearchBoxHolder45.SliceCenter = Rect.new(10, 10, 10, 10)
+	SearchBoxHolder45.Parent = Main43
+	-------
+	Box46 = Instance.new("TextBox")
+	Box46.BackgroundColor3 = Color3.new(1, 1, 1)
+	Box46.BackgroundTransparency = 1
+	Box46.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Box46.Name = "Box"
+	Box46.AnchorPoint = Vector2.new(0.5, 0.5)
+	Box46.Position = UDim2.new(0.547169805, 0, 0.5, 0)
+	Box46.Size = UDim2.new(0.856000006, 0, 0.800000012, 0)
+	Box46.ZIndex = 2
+	Box46.Font = Enum.Font.SourceSans
+	Box46.TextSize = 14
+	Box46.Text = ''
+	Box46.PlaceholderText = [[Search deletion..]]
+	Box46.TextColor3 = Color3.new(1, 1, 1)
+	Box46.TextScaled = true
+	Box46.TextWrapped = true
+	Box46.TextXAlignment = Enum.TextXAlignment.Left
+	Box46.Parent = SearchBoxHolder45
+	-------
+	UIGradient47 = Instance.new("UIGradient")
+	UIGradient47.Enabled = true
+	UIGradient47.Offset = Vector2.new(0, 0)
+	UIGradient47.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(0, 0, 0)),ColorSequenceKeypoint.new(1, Color3.new(0.32549, 0.32549, 0.32549))}
+	UIGradient47.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0, 0),NumberSequenceKeypoint.new(1, 0, 0)}
+	UIGradient47.Parent = SearchBoxHolder45
+	-------
+	SearchButton48 = Instance.new("ImageButton")
+	SearchButton48.BackgroundColor3 = Color3.new(1, 1, 1)
+	SearchButton48.BackgroundTransparency = 1
+	SearchButton48.Name = "SearchButton"
+	SearchButton48.Position = UDim2.new(0.0189999994, 0, 0, 0)
+	SearchButton48.AnchorPoint = Vector2.new(0, 0)
+	SearchButton48.AnchorPoint = Vector2.new(0, 0)
+	SearchButton48.Size = UDim2.new(0.0710000023, 0, 1.05599999, 0)
+	SearchButton48.Style = Enum.ButtonStyle.Custom
+	SearchButton48.ZIndex = 2
+	SearchButton48.Image = "rbxasset://textures/GameSettings/search.png"
+	SearchButton48.ImageColor3 = Color3.new(1, 1, 1)
+	SearchButton48.ImageTransparency = 0
+	SearchButton48.ScaleType = Enum.ScaleType.Fit
+	SearchButton48.SliceCenter = Rect.new(0, 0, 0, 0)
+	SearchButton48.Parent = SearchBoxHolder45
+	-------
+	Folder49 = Instance.new("Folder")
+	Folder49.Name = "Folder"
+	Folder49.Parent = SearchBoxHolder45
+	-------
+	border50 = Instance.new("ImageLabel")
+	border50.Active = false
+	border50.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border50.BackgroundTransparency = 1
+	border50.Name = "border"
+	border50.AnchorPoint = Vector2.new(0, 0)
+	border50.Selectable = false
+	border50.Size = UDim2.new(1, 0, 1, 0)
+	border50.AnchorPoint = Vector2.new(0, 0)
+	border50.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border50.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border50.ImageTransparency = 0.5
+	border50.ScaleType = Enum.ScaleType.Slice
+	border50.SliceCenter = Rect.new(4, 4, 5, 5)
+	border50.Parent = Folder49
+	-------
+	UIGradient51 = Instance.new("UIGradient")
+	UIGradient51.Enabled = true
+	UIGradient51.Offset = Vector2.new(0, 0)
+	UIGradient51.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(0.0705882, 0.0745098, 0.0862745)),ColorSequenceKeypoint.new(1, Color3.new(0.32549, 0.32549, 0.32549))}
+	UIGradient51.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 0.0765027403831482, 0),NumberSequenceKeypoint.new(0.5030674934387207, 0.08743172883987427, 0),NumberSequenceKeypoint.new(1, 0.15846997499465942, 0)}
+	UIGradient51.Rotation = -56
+	UIGradient51.Parent = Main43
+	-------
+	ScrollBG52 = Instance.new("Frame")
+	ScrollBG52.BackgroundColor3 = Color3.new(0.180392, 0.2, 0.219608)
+	ScrollBG52.Name = "ScrollBG"
+	ScrollBG52.Position = UDim2.new(1, 0, 1, 0)
+	ScrollBG52.Size = UDim2.new(0, 6, 0.825999975, 0)
+	ScrollBG52.ZIndex = 2
+	ScrollBG52.AnchorPoint = Vector2.new(1, 1)
+	ScrollBG52.Parent = Main43
+	-------
+	UICorner53 = Instance.new("UICorner")
+	UICorner53.CornerRadius = UDim.new(0, 8)
+	UICorner53.Parent = ScrollBG52
+	-------
+	RecycledFrame = Instance.new("ScrollingFrame")
+	RecycledFrame.Active = true
+	RecycledFrame.BackgroundColor3 = Color3.new(1, 1, 1)
+	RecycledFrame.BackgroundTransparency = 1
+	RecycledFrame.BorderSizePixel = 0
+	RecycledFrame.Name = "RecycledFrame"
+	RecycledFrame.Position = UDim2.new(0, 0, 1, 0)
+	RecycledFrame.Selectable = true
+	RecycledFrame.Size = UDim2.new(1, 0, 0.833525896, 0)
+	RecycledFrame.ZIndex = 2
+	RecycledFrame.CanvasSize = UDim2.new(0, 0, 3, 0)
+	RecycledFrame.ScrollBarImageColor3 = Color3.new(0, 0, 0)
+	RecycledFrame.AnchorPoint = Vector2.new(0, 1)
+	RecycledFrame.ScrollBarThickness = 6
+	RecycledFrame.ClipsDescendants = true
+	RecycledFrame.Parent = Main43
+	-------
+	DeletionsLayout = Instance.new("UIGridLayout")
+	DeletionsLayout.Name = "DeletionsLayout"
+	DeletionsLayout.CellPadding = UDim2.new(0, 0, 0, 10)
+	DeletionsLayout.CellSize = UDim2.new(0, 100, 0, 50)
+	DeletionsLayout.FillDirection = Enum.FillDirection.Horizontal
+	DeletionsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	DeletionsLayout.SortOrder = Enum.SortOrder.Name
+	DeletionsLayout.StartCorner = Enum.StartCorner.TopLeft
+	DeletionsLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	DeletionsLayout.Parent = RecycledFrame
+	-------
+	Deletion = Instance.new("Frame")
+	Deletion.BackgroundColor3 = Color3.new(0.294118, 0.294118, 0.294118)
+	Deletion.BackgroundTransparency = 0.5
+	Deletion.Name = "Deletion"
+	Deletion.Position = UDim2.new(-0.292853117, 0, 5.48443033e-08, 0)
+	Deletion.Size = UDim2.new(0, 100, 0, 50)
+	Deletion.ZIndex = 2
+	Deletion.AnchorPoint = Vector2.new(0, 0)
+	Deletion.Parent = DeletionsLayout
+	-------
+	UICorner57 = Instance.new("UICorner")
+	UICorner57.CornerRadius = UDim.new(0, 3)
+	UICorner57.Parent = Deletion
+	-------
+	Folder58 = Instance.new("Folder")
+	Folder58.Name = "Folder"
+	Folder58.Parent = Deletion
+	-------
+	border59 = Instance.new("ImageLabel")
+	border59.Active = false
+	border59.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border59.BackgroundTransparency = 1
+	border59.Name = "border"
+	border59.AnchorPoint = Vector2.new(0, 0)
+	border59.Selectable = false
+	border59.Size = UDim2.new(1, 0, 1, 0)
+	border59.ZIndex = 2
+	border59.AnchorPoint = Vector2.new(0, 0)
+	border59.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border59.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border59.ImageTransparency = 0.5
+	border59.ScaleType = Enum.ScaleType.Slice
+	border59.SliceCenter = Rect.new(4, 4, 5, 5)
+	border59.Parent = Folder58
+	-------
+	Title60 = Instance.new("TextButton")
+	Title60.Active = true
+	Title60.BackgroundColor3 = Color3.new(0.184314, 0.184314, 0.184314)
+	Title60.BackgroundTransparency = 1
+	Title60.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Title60.BorderSizePixel = 0
+	Title60.Name = "Title"
+	Title60.Position = UDim2.new(0.0250003207, 0, 0, 0)
+	Title60.Selectable = true
+	Title60.AnchorPoint = Vector2.new(0, 0)
+	Title60.Size = UDim2.new(0.975000024, 0, 0.560000062, 0)
+	Title60.Style = Enum.ButtonStyle.Custom
+	Title60.ZIndex = 2
+	Title60.Font = Enum.Font.SourceSansBold
+	Title60.TextSize = 14
+	Title60.Text = 'Spaceship [work in progress]'
+	Title60.TextColor3 = Color3.new(1, 1, 1)
+	Title60.TextScaled = true
+	Title60.TextStrokeTransparency = 0.5
+	Title60.TextWrapped = true
+	Title60.Parent = Deletion
+	-------
+	Restore = Instance.new("TextButton")
+	Restore.Active = true
+	Restore.BackgroundColor3 = Color3.new(0.329412, 0.329412, 0.329412)
+	Restore.BackgroundTransparency = 0.699999988079071
+	Restore.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Restore.Name = "Restore"
+	Restore.Position = UDim2.new(0.397657752, 0, 0.639999986, 0)
+	Restore.Selectable = true
+	Restore.AnchorPoint = Vector2.new(0, 0)
+	Restore.Size = UDim2.new(0.505320251, 0, 0.360000014, 0)
+	Restore.Style = Enum.ButtonStyle.Custom
+	Restore.ZIndex = 2
+	Restore.Font = Enum.Font.SourceSansLight
+	Restore.TextSize = 14
+	Restore.Text = 'Restore'
+	Restore.TextColor3 = Color3.new(1, 1, 1)
+	Restore.TextScaled = true
+	Restore.TextWrapped = true
+	Restore.Parent = Deletion
+	-------
+	Delete62 = Instance.new("ImageButton")
+	Delete62.BackgroundColor3 = Color3.new(0.329412, 0.329412, 0.329412)
+	Delete62.BackgroundTransparency = 0.699999988079071
+	Delete62.Name = "Delete"
+	Delete62.Position = UDim2.new(0.112977929, 0, 1, 0)
+	Delete62.AnchorPoint = Vector2.new(0, 1)
+	Delete62.AnchorPoint = Vector2.new(0, 1)
+	Delete62.Size = UDim2.new(0.200000003, 0, 0.360000014, 0)
+	Delete62.Style = Enum.ButtonStyle.Custom
+	Delete62.ZIndex = 2
+	Delete62.Image = "rbxasset://textures/GameSettings/delete.png"
+	Delete62.ImageColor3 = Color3.new(0.776471, 0.223529, 0.0392157)
+	Delete62.ImageTransparency = 0
+	Delete62.ScaleType = Enum.ScaleType.Fit
+	Delete62.SliceCenter = Rect.new(0, 0, 0, 0)
+	Delete62.Parent = Deletion
+	-------
+	Folder63 = Instance.new("Folder")
+	Folder63.Name = "Folder"
+	Folder63.Parent = Main43
+	-------
+	border64 = Instance.new("ImageLabel")
+	border64.Active = false
+	border64.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border64.BackgroundTransparency = 1
+	border64.Name = "border"
+	border64.AnchorPoint = Vector2.new(0, 0)
+	border64.Selectable = false
+	border64.Size = UDim2.new(1, 0, 1, 0)
+	border64.ZIndex = 0
+	border64.AnchorPoint = Vector2.new(0, 0)
+	border64.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border64.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border64.ImageTransparency = 0.5
+	border64.ScaleType = Enum.ScaleType.Slice
+	border64.SliceCenter = Rect.new(4, 4, 5, 5)
+	border64.Parent = Folder63
+	-------
+	Header65 = Instance.new("Frame")
+	Header65.BackgroundColor3 = Color3.new(0.266667, 0.266667, 0.266667)
+	Header65.Name = "Header"
+	Header65.Position = UDim2.new(0.5, 0, 0, 0)
+	Header65.Size = UDim2.new(0.966000021, 0, 0.100000001, 0)
+	Header65.ZIndex = 3
+	Header65.AnchorPoint = Vector2.new(0.5, 0)
+	Header65.Parent = RecycleBin42
+	-------
+	UICorner66 = Instance.new("UICorner")
+	UICorner66.CornerRadius = UDim.new(0, 4)
+	UICorner66.Parent = Header65
+	-------
+	Folder67 = Instance.new("Folder")
+	Folder67.Name = "Folder"
+	Folder67.Parent = Header65
+	-------
+	border68 = Instance.new("ImageLabel")
+	border68.Active = false
+	border68.BackgroundColor3 = Color3.new(0.639216, 0.635294, 0.647059)
+	border68.BackgroundTransparency = 1
+	border68.Name = "border"
+	border68.AnchorPoint = Vector2.new(0, 0)
+	border68.Selectable = false
+	border68.Size = UDim2.new(1, 0, 1, 0)
+	border68.AnchorPoint = Vector2.new(0, 0)
+	border68.Image = "rbxasset://textures/AvatarImporter/button_avatarType_border.png"
+	border68.ImageColor3 = Color3.new(0.203922, 0.203922, 0.203922)
+	border68.ImageTransparency = 0.5
+	border68.ScaleType = Enum.ScaleType.Slice
+	border68.SliceCenter = Rect.new(4, 4, 5, 5)
+	border68.Parent = Folder67
+	-------
+	Close = Instance.new("TextButton")
+	Close.Active = true
+	Close.BackgroundColor3 = Color3.new(1, 1, 1)
+	Close.BackgroundTransparency = 1
+	Close.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Close.Name = "Close"
+	Close.Position = UDim2.new(1, 0, 0.882000029, 0)
+	Close.Selectable = true
+	Close.AnchorPoint = Vector2.new(1, 1)
+	Close.Size = UDim2.new(0.0800556839, 0, 0.927934349, 0)
+	Close.Style = Enum.ButtonStyle.Custom
+	Close.ZIndex = 3
+	Close.Font = Enum.Font.Cartoon
+	Close.TextSize = 20
+	Close.Text = 'x'
+	Close.TextColor3 = Color3.new(1, 0, 0)
+	Close.TextScaled = true
+	Close.TextWrapped = true
+	Close.Parent = Header65
+	-------
+	Title70 = Instance.new("TextButton")
+	Title70.Active = true
+	Title70.BackgroundColor3 = Color3.new(1, 1, 1)
+	Title70.BackgroundTransparency = 1
+	Title70.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Title70.Name = "Title"
+	Title70.Position = UDim2.new(0.5, 0, 0.527999997, 0)
+	Title70.Selectable = true
+	Title70.AnchorPoint = Vector2.new(0.5, 0.550000012)
+	Title70.Size = UDim2.new(1, 0, 0.959999979, 0)
+	Title70.Style = Enum.ButtonStyle.Custom
+	Title70.ZIndex = 2
+	Title70.Font = Enum.Font.SourceSansBold
+	Title70.TextSize = 14
+	Title70.Text = ''
+	Title70.TextColor3 = Color3.new(1, 1, 1)
+	Title70.TextScaled = true
+	Title70.TextWrapped = true
+	Title70.Parent = Header65
+	-------
+	RecycleBin71 = Instance.new("ImageButton")
+	RecycleBin71.BackgroundColor3 = Color3.new(1, 1, 1)
+	RecycleBin71.BackgroundTransparency = 1
+	RecycleBin71.Name = "RecycleBin"
+	RecycleBin71.Position = UDim2.new(0.5, 0, 0.5, 0)
+	RecycleBin71.AnchorPoint = Vector2.new(0.5, 0.5)
+	RecycleBin71.AnchorPoint = Vector2.new(0.5, 0.5)
+	RecycleBin71.Size = UDim2.new(0.0549850538, 0, 0.846320093, 0)
+	RecycleBin71.Style = Enum.ButtonStyle.Custom
+	RecycleBin71.ZIndex = 3
+	RecycleBin71.Image = "rbxassetid://10187593425"
+	RecycleBin71.ImageColor3 = Color3.new(1, 1, 1)
+	RecycleBin71.ImageTransparency = 0
+	RecycleBin71.ScaleType = Enum.ScaleType.Fit
+	RecycleBin71.SliceCenter = Rect.new(0, 0, 0, 0)
+	RecycleBin71.Parent = Header65
+	-------
+	Minimize72 = Instance.new("TextButton")
+	Minimize72.Active = true
+	Minimize72.BackgroundColor3 = Color3.new(1, 1, 1)
+	Minimize72.BackgroundTransparency = 1
+	Minimize72.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	Minimize72.Name = "Minimize"
+	Minimize72.Position = UDim2.new(0.850000024, 0, 0.853999972, 0)
+	Minimize72.Selectable = true
+	Minimize72.AnchorPoint = Vector2.new(0, 1)
+	Minimize72.Size = UDim2.new(0.0800556839, 0, 0.927934349, 0)
+	Minimize72.Style = Enum.ButtonStyle.Custom
+	Minimize72.ZIndex = 3
+	Minimize72.Font = Enum.Font.Cartoon
+	Minimize72.TextSize = 20
+	Minimize72.Text = '-'
+	Minimize72.TextColor3 = Color3.new(1, 1, 1)
+	Minimize72.TextScaled = true
+	Minimize72.TextWrapped = true
+	Minimize72.Parent = Header65
+	-------
+	UIGradient73 = Instance.new("UIGradient")
+	UIGradient73.Enabled = true
+	UIGradient73.Offset = Vector2.new(0, 0)
+	UIGradient73.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)),ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1))}
+	UIGradient73.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0, 1, 0),NumberSequenceKeypoint.new(0.25, 1, 0),NumberSequenceKeypoint.new(0.5, 1, 0),NumberSequenceKeypoint.new(0.8435582518577576, 1, 0),NumberSequenceKeypoint.new(1, 0.30000001192092896, 0)}
+	UIGradient73.Rotation = 45
+	UIGradient73.Parent = RecycleBin42
+	-------
+	ResizePoint74 = Instance.new("TextButton")
+	ResizePoint74.Active = true
+	ResizePoint74.BackgroundColor3 = Color3.new(0, 0, 0)
+	ResizePoint74.BackgroundTransparency = 0.5
+	ResizePoint74.BorderColor3 = Color3.new(0.105882, 0.164706, 0.207843)
+	ResizePoint74.Name = "ResizePoint"
+	ResizePoint74.Position = UDim2.new(1, 0, 1, 0)
+	ResizePoint74.Selectable = true
+	ResizePoint74.AnchorPoint = Vector2.new(1, 1)
+	ResizePoint74.Size = UDim2.new(0, 10, 0, 10)
+	ResizePoint74.Style = Enum.ButtonStyle.Custom
+	ResizePoint74.ZIndex = 3
+	ResizePoint74.Font = Enum.Font.SourceSans
+	ResizePoint74.TextSize = 14
+	ResizePoint74.Text = ''
+	ResizePoint74.TextColor3 = Color3.new(0, 0, 0)
+ResizePoint74.Parent = RecycleBin42
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- repr - Version 1.2
+-- Ozzypig - ozzypig.com - http://twitter.com/Ozzypig
+-- Check out this thread for more info:
+-- https://devforum.roblox.com/t/repr-function-for-printing-tables/276575
+--[[
+ 
+local repr = require(3148021300)
+
+local myTable = {
+	hello = "world",
+	score = 5,
+	isCool = true
+}
+print(repr(myTable)) --> {hello = "world", isCool = true, score = 5}
+ 
+]]
+
+local defaultSettings = {
+	pretty = false;
+	robloxFullName = true;
+	robloxProperFullName = true;
+	robloxClassName = true;
+	tabs = true;
+	semicolons = true;
+	spaces = 3;
+	sortKeys = true;
+}
+
+-- lua keywords
+local keywords = {["and"]=true, ["break"]=true, ["do"]=true, ["else"]=true,
+	["elseif"]=true, ["end"]=true, ["false"]=true, ["for"]=true, ["function"]=true,
+	["if"]=true, ["in"]=true, ["local"]=true, ["nil"]=true, ["not"]=true, ["or"]=true,
+	["repeat"]=true, ["return"]=true, ["then"]=true, ["true"]=true, ["until"]=true, ["while"]=true}
+
+local function isLuaIdentifier(str)
+	if type(str) ~= "string" then return false end
+	-- must be nonempty
+	if str:len() == 0 then return false end
+	-- can only contain a-z, A-Z, 0-9 and underscore
+	if str:find("[^%s%a_]") then return false end
+	-- cannot begin with digit
+	if tonumber(str:sub(1, 1)) then return false end
+	-- cannot be keyword
+	if keywords[str] then return false end
+	return true
 end
 
--- Create symbol representing a blank value
-local Blank = newproxy(true)
-SupportLibrary.Blank = Blank
-getmetatable(Blank).__tostring = function ()
-	return 'Symbol(Blank)'
+-- works like Instance:GetFullName(), but invalid Lua identifiers are fixed (e.g. workspace["The Dude"].Humanoid)
+local function properFullName(object, usePeriod)
+	if object == nil or object == game then return "" end
+
+	local s = object.Name
+	local usePeriod = true
+	if not isLuaIdentifier(s) then
+		s = ("[%q]"):format(s)
+		usePeriod = false
+	end
+
+	if not object.Parent or object.Parent == game then
+		return s
+	else
+		return properFullName(object.Parent) .. (usePeriod and "." or "") .. s 
+	end
 end
 
-function SupportLibrary.MergeWithBlanks(Target, ...)
-	-- Copies members of the given tables into the specified target table, including blank values
+local depth = 0
+local shown
+local INDENT
+local reprSettings
 
-	local Tables = { ... }
+local function repr(value, reprSettings)
+	reprSettings = reprSettings or defaultSettings
+	INDENT = (" "):rep(reprSettings.spaces or defaultSettings.spaces)
+	if reprSettings.tabs then
+		INDENT = "\t"
+	end
 
-	-- Copy members from each table into target
-	for TableOrder, Table in ipairs(Tables) do
-		for Key, Value in pairs(Table) do
-			if Value == Blank then
-				Target[Key] = nil
-			else
-				Target[Key] = Value
+	local v = value --args[1]
+	local tabs = INDENT:rep(depth)
+
+	if depth == 0 then
+		shown = {}
+	end
+	if type(v) == "string" then
+		return ("%q"):format(v)
+	elseif type(v) == "number" then
+		if v == math.huge then return "math.huge" end
+		if v == -math.huge then return "-math.huge" end
+		return tonumber(v)
+	elseif type(v) == "boolean" then
+		return tostring(v)
+	elseif type(v) == "nil" then
+		return "nil"
+	elseif type(v) == "table" and type(v.__tostring) == "function" then
+		return tostring(v.__tostring(v))
+	elseif type(v) == "table" and getmetatable(v) and type(getmetatable(v).__tostring) == "function" then
+		return tostring(getmetatable(v).__tostring(v))
+	elseif type(v) == "table" then
+		if shown[v] then return "{CYCLIC}" end
+		shown[v] = true
+		local str = "{" .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or "")
+		local isArray = true
+		for k, v in pairs(v) do
+			if type(k) ~= "number" then
+				isArray = false
+				break
 			end
 		end
-	end
-
-	-- Return target
-	return Target
-end
-
-function SupportLibrary.GetAllDescendants(Parent)
-	-- Recursively gets all the descendants of `Parent` and returns them
-
-	local Descendants = {};
-
-	for _, Child in pairs(Parent:GetChildren()) do
-
-		-- Add the direct descendants of `Parent`
-		table.insert(Descendants, Child);
-
-		-- Add the descendants of each child
-		for _, Subchild in pairs(SupportLibrary.GetAllDescendants(Child)) do
-			table.insert(Descendants, Subchild);
-		end;
-
-	end;
-
-	return Descendants;
-end;
-
-function SupportLibrary.GetDescendantsWhichAreA(Object, Class)
-	-- Returns descendants of `Object` which match `Class`
-
-	local Matches = {}
-
-	-- Check each descendant
-	for _, Descendant in pairs(Object:GetDescendants()) do
-		if Descendant:IsA(Class) then
-			Matches[#Matches + 1] = Descendant
-		end
-	end
-
-	-- Return matches
-	return Matches
-
-end
-
-function SupportLibrary.FilterArray(Array, Callback)
-	-- Returns a filtered copy of `Array` based on the filter `Callback`
-
-	local FilteredArray = {}
-
-	-- Add items from `Array` that `Callback` returns `true` on
-	for Key, Value in ipairs(Array) do
-		if Callback(Value, Key) then
-			table.insert(FilteredArray, Value)
-		end
-	end
-
-	return FilteredArray
-end
-
-function SupportLibrary.FilterMap(Map, Callback)
-	-- Returns a filtered copy of `Map` based on the filter `Callback`
-
-	local FilteredMap = {}
-
-	-- Add items from `Map` that `Callback` returns `true` on
-	for Key, Value in ipairs(Map) do
-		if Callback(Value, Key) then
-			FilteredMap[Key] = Value
-		end
-	end
-
-	return FilteredMap
-end
-
-function SupportLibrary.GetDescendantCount(Parent)
-	-- Recursively gets a count of all the descendants of `Parent` and returns them
-
-	local Count = 0;
-
-	for _, Child in pairs(Parent:GetChildren()) do
-
-		-- Count the direct descendants of `Parent`
-		Count = Count + 1;
-
-		-- Count and add the descendants of each child
-		Count = Count + SupportLibrary.GetDescendantCount(Child);
-
-	end;
-
-	return Count;
-end;
-
-function SupportLibrary.CloneParts(Parts)
-	-- Returns a table of cloned `Parts`
-
-	local Clones = {};
-
-	-- Copy the parts into `Clones`
-	for Index, Part in pairs(Parts) do
-		Clones[Index] = Part:Clone();
-	end;
-
-	return Clones;
-end;
-
-function SupportLibrary.SplitString(String, Delimiter)
-	-- Returns a table of string `String` split by pattern `Delimiter`
-
-	local StringParts = {};
-	local Pattern = ('([^%s]+)'):format(Delimiter);
-
-	-- Capture each separated part
-	String:gsub(Pattern, function (Part)
-		table.insert(StringParts, Part);
-	end);
-
-	return StringParts;
-end;
-
-function SupportLibrary.GetChildOfClass(Parent, ClassName, Inherit)
-	-- Returns the first child of `Parent` that is of class `ClassName`
-	-- or nil if it couldn't find any
-
-	-- Look for a child of `Parent` of class `ClassName` and return it
-	if not Inherit then
-		for _, Child in pairs(Parent:GetChildren()) do
-			if Child.ClassName == ClassName then
-				return Child;
-			end;
-		end;
-	else
-		for _, Child in pairs(Parent:GetChildren()) do
-			if Child:IsA(ClassName) then
-				return Child;
-			end;
-		end;
-	end;
-
-	return nil;
-end;
-
-function SupportLibrary.GetChildrenOfClass(Parent, ClassName, Inherit)
-	-- Returns a table containing the children of `Parent` that are
-	-- of class `ClassName`
-
-	local Matches = {};
-
-	if not Inherit then
-		for _, Child in pairs(Parent:GetChildren()) do
-			if Child.ClassName == ClassName then
-				table.insert(Matches, Child);
-			end;
-		end;
-	else
-		for _, Child in pairs(Parent:GetChildren()) do
-			if Child:IsA(ClassName) then
-				table.insert(Matches, Child);
-			end;
-		end;
-	end;
-
-	return Matches;
-end;
-
-function SupportLibrary.HSVToRGB(Hue, Saturation, Value)
-	-- Returns the RGB equivalent of the given HSV-defined color
-	-- (adapted from some code found around the web)
-
-	-- If it's achromatic, just return the value
-	if Saturation == 0 then
-		return Value;
-	end;
-
-	-- Get the hue sector
-	local HueSector = math.floor(Hue / 60);
-	local HueSectorOffset = (Hue / 60) - HueSector;
-
-	local P = Value * (1 - Saturation);
-	local Q = Value * (1 - Saturation * HueSectorOffset);
-	local T = Value * (1 - Saturation * (1 - HueSectorOffset));
-
-	if HueSector == 0 then
-		return Value, T, P;
-	elseif HueSector == 1 then
-		return Q, Value, P;
-	elseif HueSector == 2 then
-		return P, Value, T;
-	elseif HueSector == 3 then
-		return P, Q, Value;
-	elseif HueSector == 4 then
-		return T, P, Value;
-	elseif HueSector == 5 then
-		return Value, P, Q;
-	end;
-end;
-
-function SupportLibrary.RGBToHSV(Red, Green, Blue)
-	-- Returns the HSV equivalent of the given RGB-defined color
-	-- (adapted from some code found around the web)
-
-	local Hue, Saturation, Value;
-
-	local MinValue = math.min(Red, Green, Blue);
-	local MaxValue = math.max(Red, Green, Blue);
-
-	Value = MaxValue;
-
-	local ValueDelta = MaxValue - MinValue;
-
-	-- If the color is not black
-	if MaxValue ~= 0 then
-		Saturation = ValueDelta / MaxValue;
-
-	-- If the color is purely black
-	else
-		Saturation = 0;
-		Hue = -1;
-		return Hue, Saturation, Value;
-	end;
-
-	if Red == MaxValue then
-		Hue = (Green - Blue) / ValueDelta;
-	elseif Green == MaxValue then
-		Hue = 2 + (Blue - Red) / ValueDelta;
-	else
-		Hue = 4 + (Red - Green) / ValueDelta;
-	end;
-
-	Hue = Hue * 60;
-	if Hue < 0 then
-		Hue = Hue + 360;
-	end;
-
-	return Hue, Saturation, Value;
-end;
-
-function SupportLibrary.IdentifyCommonItem(Items)
-	-- Returns the common item in table `Items`, or `nil` if
-	-- they vary
-
-	local CommonItem = nil;
-
-	for ItemIndex, Item in pairs(Items) do
-
-		-- Set the initial item to compare against
-		if ItemIndex == 1 then
-			CommonItem = Item;
-
-		-- Check if this item is the same as the rest
+		if isArray then
+			for i = 1, #v do
+				if i ~= 1 then
+					str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+				end
+				depth = depth + 1
+				str = str .. repr(v[i], reprSettings)
+				depth = depth - 1
+			end
 		else
-			-- If it isn't the same, there is no common item, so just stop right here
-			if Item ~= CommonItem then
-				return nil;
-			end;
-		end;
-
-	end;
-
-	-- Return the common item
-	return CommonItem;
-end;
-
-function SupportLibrary.IdentifyCommonProperty(Items, Property)
-	-- Returns the common `Property` value in the instances given in `Items`
-
-	local PropertyVariations = {};
-
-	-- Capture all the variations of the property value
-	for _, Item in pairs(Items) do
-		table.insert(PropertyVariations, Item[Property]);
-	end;
-
-	-- Return the common property value
-	return SupportLibrary.IdentifyCommonItem(PropertyVariations);
-
-end;
-
-function SupportLibrary.GetPartCorners(Part)
-	-- Returns a table of the given part's corners' CFrames
-
-	-- Make references to functions called a lot for efficiency
-	local Insert = table.insert;
-	local ToWorldSpace = CFrame.new().toWorldSpace;
-	local NewCFrame = CFrame.new;
-
-	-- Get info about the part
-	local PartCFrame = Part.CFrame;
-	local SizeX, SizeY, SizeZ = Part.Size.x / 2, Part.Size.y / 2, Part.Size.z / 2;
-
-	-- Get each corner
-	local Corners = {};
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(SizeX, SizeY, SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(-SizeX, SizeY, SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(SizeX, -SizeY, SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(SizeX, SizeY, -SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(-SizeX, SizeY, -SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(-SizeX, -SizeY, SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(SizeX, -SizeY, -SizeZ)));
-	Insert(Corners, ToWorldSpace(PartCFrame, NewCFrame(-SizeX, -SizeY, -SizeZ)));
-
-	return Corners;
-end;
-
-function SupportLibrary.ImportServices()
-	-- Adds references to common services into the calling environment
-
-	-- Get the calling environment
-	local CallingEnvironment = getfenv(2);
-
-	-- Add the services
-	CallingEnvironment.Workspace = Game:GetService 'Workspace';
-	CallingEnvironment.Players = Game:GetService 'Players';
-	CallingEnvironment.MarketplaceService = Game:GetService 'MarketplaceService';
-	CallingEnvironment.ContentProvider = Game:GetService 'ContentProvider';
-	CallingEnvironment.SoundService = Game:GetService 'SoundService';
-	CallingEnvironment.UserInputService = Game:GetService 'UserInputService';
-	CallingEnvironment.SelectionService = Game:GetService 'Selection';
-	CallingEnvironment.CoreGui = Game:GetService 'CoreGui';
-	CallingEnvironment.HttpService = Game:GetService 'HttpService';
-	CallingEnvironment.ChangeHistoryService = Game:GetService 'ChangeHistoryService';
-	CallingEnvironment.ReplicatedStorage = Game:GetService 'ReplicatedStorage';
-	CallingEnvironment.GroupService = Game:GetService 'GroupService';
-	CallingEnvironment.ServerScriptService = Game:GetService 'ServerScriptService';
-	CallingEnvironment.ServerStorage = Game:GetService 'ServerStorage';
-	CallingEnvironment.StarterGui = Game:GetService 'StarterGui';
-	CallingEnvironment.RunService = Game:GetService 'RunService';
-end;
-
-function SupportLibrary.GetListMembers(List, MemberName)
-	-- Gets the given member for each object in the given list table
-
-	local Members = {}
-
-	-- Collect the member values for each item in the list
-	for Key, Item in ipairs(List) do
-		Members[Key] = Item[MemberName]
-	end
-
-	-- Return the members
-	return Members
-
-end
-
-function SupportLibrary.GetMemberMap(List, MemberName)
-	-- Maps the given items' specified members to each item
-
-	local Map = {}
-
-	-- Collect member values
-	for Key, Item in ipairs(List) do
-		Map[Item] = Item[MemberName]
-	end
-
-	-- Return map
-	return Map
-
-end
-
-function SupportLibrary.AddUserInputListener(InputState, InputTypeFilter, CatchAll, Callback)
-	-- Connects to the given user input event and takes care of standard boilerplate code
-
-	-- Create input type whitelist
-	local InputTypes = {}
-	if type(InputTypeFilter) == 'string' then
-		InputTypes[InputTypeFilter] = true
-	elseif type(InputTypeFilter) == 'table' then
-		InputTypes = SupportLibrary.FlipTable(InputTypeFilter)
-	end
-
-	-- Create a UserInputService listener based on the given `InputState`
-	return Game:GetService('UserInputService')['Input' .. InputState]:Connect(function (Input, GameProcessedEvent)
-
-		-- Make sure this input was not captured by the client (unless `CatchAll` is enabled)
-		if GameProcessedEvent and not CatchAll then
-			return;
-		end;
-
-		-- Make sure this is the right input type
-		if not InputTypes[Input.UserInputType.Name] then
-			return;
-		end;
-
-		-- Make sure any key input did not occur while typing into a UI
-		if InputType == Enum.UserInputType.Keyboard and Game:GetService('UserInputService'):GetFocusedTextBox() then
-			return;
-		end;
-
-		-- Call back upon passing all conditions
-		Callback(Input);
-
-	end);
-
-end;
-
-function SupportLibrary.AddGuiInputListener(Gui, InputState, InputTypeFilter, CatchAll, Callback)
-	-- Connects to the given GUI user input event and takes care of standard boilerplate code
-
-	-- Create input type whitelist
-	local InputTypes = {}
-	if type(InputTypeFilter) == 'string' then
-		InputTypes[InputTypeFilter] = true
-	elseif type(InputTypeFilter) == 'table' then
-		InputTypes = SupportLibrary.FlipTable(InputTypeFilter)
-	end
-
-	-- Create a UserInputService listener based on the given `InputState`
-	return Gui['Input' .. InputState]:Connect(function (Input, GameProcessedEvent)
-
-		-- Make sure this input was not captured by the client (unless `CatchAll` is enabled)
-		if GameProcessedEvent and not CatchAll then
-			return;
-		end;
-
-		-- Make sure this is the right input type
-		if not InputTypes[Input.UserInputType.Name] then
-			return;
-		end;
-
-		-- Call back upon passing all conditions
-		Callback(Input);
-
-	end);
-
-end;
-
-function SupportLibrary.AreKeysPressed(...)
-	-- Returns whether the given keys are pressed
-
-	local RequestedKeysPressed = 0;
-
-	-- Get currently pressed keys
-	local PressedKeys = SupportLibrary.GetListMembers(Game:GetService('UserInputService'):GetKeysPressed(), 'KeyCode');
-
-	-- Go through each requested key
-	for _, Key in pairs({ ... }) do
-
-		-- Count requested keys that are pressed
-		if SupportLibrary.IsInTable(PressedKeys, Key) then
-			RequestedKeysPressed = RequestedKeysPressed + 1;
-		end;
-
-	end;
-
-	-- Return whether all the requested keys are pressed or not
-	return RequestedKeysPressed == #{...};
-
-end;
-
-function SupportLibrary.ConcatTable(TargetTable, ...)
-	-- Inserts all values from given source tables into target
-
-	local SourceTables = { ... }
-
-	-- Insert values from each source table into target
-	for TableOrder, SourceTable in ipairs(SourceTables) do
-		for Key, Value in ipairs(SourceTable) do
-			table.insert(TargetTable, Value)
+			local keyOrder = {}
+			local keyValueStrings = {}
+			for k, v in pairs(v) do
+				depth = depth + 1
+				local kStr = isLuaIdentifier(k) and k or ("[" .. repr(k, reprSettings) .. "]")
+				local vStr = repr(v, reprSettings)
+				--[[str = str .. ("%s = %s"):format(
+					isLuaIdentifier(k) and k or ("[" .. repr(k, reprSettings) .. "]"),
+					repr(v, reprSettings)
+				)]]
+				table.insert(keyOrder, kStr)
+				keyValueStrings[kStr] = vStr
+				depth = depth - 1
+			end
+			if reprSettings.sortKeys then table.sort(keyOrder) end
+			local first = true
+			for _, kStr in pairs(keyOrder) do
+				if not first then
+					str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+				end
+				str = str .. ("%s = %s"):format(kStr, keyValueStrings[kStr])
+				first = false
+			end
 		end
-	end
-
-	-- Return the destination table
-	return TargetTable
-end
-
-function SupportLibrary.ClearTable(Table)
-	-- Clears out every value in `Table`
-
-	-- Clear each index
-	for Index in pairs(Table) do
-		Table[Index] = nil;
-	end;
-
-	-- Return the given table
-	return Table;
-end;
-
-function SupportLibrary.Values(Table)
-	-- Returns all the values in the given table
-
-	local Values = {};
-
-	-- Go through each key and get each value
-	for _, Value in pairs(Table) do
-		table.insert(Values, Value);
-	end;
-
-	-- Return the values
-	return Values;
-end;
-
-function SupportLibrary.Keys(Table)
-	-- Returns all the keys in the given table
-
-	local Keys = {};
-
-	-- Go through each key and get each value
-	for Key in pairs(Table) do
-		table.insert(Keys, Key);
-	end;
-
-	-- Return the values
-	return Keys;
-end;
-
-function SupportLibrary.Call(Function, ...)
-	-- Returns a callback to `Function` with the given arguments
-	local Args = { ... }
-	return function (...)
-		return Function(unpack(
-			SupportLibrary.ConcatTable({}, Args, { ... })
-		))
-	end
-end
-
-function SupportLibrary.Trim(String)
-	-- Returns a trimmed version of `String` (adapted from code from lua-users)
-	return (String:gsub("^%s*(.-)%s*$", "%1"));
-end
-
-function SupportLibrary.ChainCall(...)
-	-- Returns function that passes arguments through given functions and returns the final result
-
-	-- Get the given chain of functions
-	local Chain = { ... };
-
-	-- Return the chaining function
-	return function (...)
-
-		-- Get arguments
-		local Arguments = { ... };
-
-		-- Go through each function and store the returned data to reuse in the next function's arguments 
-		for _, Function in ipairs(Chain) do
-			Arguments = { Function(unpack(Arguments)) };
-		end;
-
-		-- Return the final returned data
-		return unpack(Arguments);
-
-	end;
-
-end;
-
-function SupportLibrary.CountKeys(Table)
-	-- Returns the number of keys in `Table`
-
-	local Count = 0;
-
-	-- Count each key
-	for _ in pairs(Table) do
-		Count = Count + 1;
-	end;
-
-	-- Return the count
-	return Count;
-
-end;
-
-function SupportLibrary.Slice(Table, Start, End)
-	-- Returns values from `Start` to `End` in `Table`
-
-	local Slice = {};
-
-	-- Go through the given indices
-	for Index = Start, End do
-		table.insert(Slice, Table[Index]);
-	end;
-
-	-- Return the slice
-	return Slice;
-
-end;
-
-function SupportLibrary.FlipTable(Table)
-	-- Returns a table with keys and values in `Table` swapped
-
-	local FlippedTable = {};
-
-	-- Flip each key and value
-	for Key, Value in pairs(Table) do
-		FlippedTable[Value] = Key;
-	end;
-
-	-- Return the flipped table
-	return FlippedTable;
-
-end;
-
-function SupportLibrary.ScheduleRecurringTask(TaskFunction, Interval)
-	-- Repeats `Task` every `Interval` seconds until stopped
-
-	-- Create a task object
-	local Task = {
-
-		-- A switch determining if it's running or not
-		Running = true;
-
-		-- A function to stop this task
-		Stop = function (Task)
-			Task.Running = false;
-		end;
-
-		-- References to the task function and set interval
-		TaskFunction = TaskFunction;
-		Interval = Interval;
-
-	};
-
-	coroutine.wrap(function (Task)
-
-		-- Repeat the task
-		while wait(Task.Interval) and Task.Running do
-			Task.TaskFunction();
-		end;
-
-	end)(Task);
-
-	-- Return the task object
-	return Task;
-
-end;
-
-function SupportLibrary.Loop(Interval, Function, ...)
-	-- Calls the given function repeatedly at the specified interval until stopped
-
-	local Args = { ... }
-
-	-- Create state
-	local Running = true
-	local Stop = function ()
-		Running = nil
-	end
-
-	-- Start loop
-	coroutine.wrap(function ()
-		while wait(Interval) and Running do
-			Function(unpack(Args))
+		shown[v] = false
+		if reprSettings.pretty then
+			str = str .. "\n" .. tabs
 		end
-	end)()
-
-	-- Return stopping callback
-	return Stop
-end
-
-function SupportLibrary.Clamp(Number, Minimum, Maximum)
-	-- Returns the given number, clamped according to the provided min/max
-
-	-- Clamp the number
-	if Minimum and Number < Minimum then
-		Number = Minimum;
-	elseif Maximum and Number > Maximum then
-		Number = Maximum;
-	end;
-
-	-- Return the clamped number
-	return Number;
-
-end;
-
-function SupportLibrary.ReverseTable(Table)
-	-- Returns a new table with values in the opposite order
-
-	local ReversedTable = {};
-
-	-- Copy each value at the opposite key
-	for Index, Value in ipairs(Table) do
-		ReversedTable[#Table - Index + 1] = Value;
-	end;
-
-	-- Return the reversed table
-	return ReversedTable;
-
-end;
-
-function SupportLibrary.CreateConsecutiveCallDeferrer(MaxInterval)
-	-- Returns a callback for determining whether to execute consecutive calls
-
-	local LastCallTime
-	local function ShouldExecuteCall()
-
-		-- Mark latest call time
-		local CallTime = tick()
-		LastCallTime = CallTime
-
-		-- Indicate whether call still latest
-		wait(MaxInterval)
-		return LastCallTime == CallTime
-
-	end
-
-	-- Return callback
-	return ShouldExecuteCall
-
-end
-
-return SupportLibrary;
-end
-Support=Support()
-Support.ImportServices();
-
-local Types = {
-	Part = 0,
-	WedgePart = 1,
-	CornerWedgePart = 2,
-	VehicleSeat = 3,
-	Seat = 4,
-	TrussPart = 5,
-	SpecialMesh = 6,
-	Texture = 7,
-	Decal = 8,
-	PointLight = 9,
-	SpotLight = 10,
-	SurfaceLight = 11,
-	Smoke = 12,
-	Fire = 13,
-	Sparkles = 14,
-	Model = 15,
-	Folder = 18
-};
-
-local DefaultNames = {
-	Part = 'Part',
-	WedgePart = 'Wedge',
-	CornerWedgePart = 'CornerWedge',
-	VehicleSeat = 'VehicleSeat',
-	Seat = 'Seat',
-	TrussPart = 'Truss',
-	SpecialMesh = 'Mesh',
-	Texture = 'Texture',
-	Decal = 'Decal',
-	PointLight = 'PointLight',
-	SpotLight = 'SpotLight',
-	SurfaceLight = 'SurfaceLight',
-	Smoke = 'Smoke',
-	Fire = 'Fire',
-	Sparkles = 'Sparkles',
-	Model = 'Model',
-	Folder = 'Folder'
-};
-
-function Serialization.SerializeModel(Items)
-	-- Returns a serialized version of the given model
-
-	-- Filter out non-serializable items in `Items`
-	local SerializableItems = {};
-	for Index, Item in ipairs(Items) do
-		table.insert(SerializableItems, Types[Item.ClassName] and Item or nil);
-	end;
-	Items = SerializableItems;
-
-	-- Get a snapshot of the content
-	local Keys = Support.FlipTable(Items);
-
-	local Data = {};
-	Data.Version = 3;
-	Data.Items = {};
-
-	-- Serialize each item in the model
-	for Index, Item in pairs(Items) do
-
-		if Item:IsA 'BasePart' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Size.X;
-			Datum[5] = Item.Size.Y;
-			Datum[6] = Item.Size.Z;
-			Support.ConcatTable(Datum, { Item.CFrame:components() });
-			Datum[19] = Item.Color.r;
-			Datum[20] = Item.Color.g;
-			Datum[21] = Item.Color.b;
-			Datum[22] = Item.Material.Value;
-			Datum[23] = Item.Anchored and 1 or 0;
-			Datum[24] = Item.CanCollide and 1 or 0;
-			Datum[25] = Item.Reflectance;
-			Datum[26] = Item.Transparency;
-			Datum[27] = Item.TopSurface.Value;
-			Datum[28] = Item.BottomSurface.Value;
-			Datum[29] = Item.FrontSurface.Value;
-			Datum[30] = Item.BackSurface.Value;
-			Datum[31] = Item.LeftSurface.Value;
-			Datum[32] = Item.RightSurface.Value;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Part' then
-			local Datum = Data.Items[Index];
-			Datum[33] = Item.Shape.Value;
-		end;
-
-		if Item.ClassName == 'VehicleSeat' then
-			local Datum = Data.Items[Index];
-			Datum[33] = Item.MaxSpeed;
-			Datum[34] = Item.Torque;
-			Datum[35] = Item.TurnSpeed;
-		end;
-
-		if Item.ClassName == 'TrussPart' then
-			local Datum = Data.Items[Index];
-			Datum[33] = Item.Style.Value;
-		end;
-
-		if Item.ClassName == 'SpecialMesh' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.MeshType.Value;
-			Datum[5] = Item.MeshId;
-			Datum[6] = Item.TextureId;
-			Datum[7] = Item.Offset.X;
-			Datum[8] = Item.Offset.Y;
-			Datum[9] = Item.Offset.Z;
-			Datum[10] = Item.Scale.X;
-			Datum[11] = Item.Scale.Y;
-			Datum[12] = Item.Scale.Z;
-			Datum[13] = Item.VertexColor.X;
-			Datum[14] = Item.VertexColor.Y;
-			Datum[15] = Item.VertexColor.Z;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item:IsA 'Decal' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Texture;
-			Datum[5] = Item.Transparency;
-			Datum[6] = Item.Face.Value;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Texture' then
-			local Datum = Data.Items[Index];
-			Datum[7] = Item.StudsPerTileU;
-			Datum[8] = Item.StudsPerTileV;
-		end;
-
-		if Item:IsA 'Light' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Brightness;
-			Datum[5] = Item.Color.r;
-			Datum[6] = Item.Color.g;
-			Datum[7] = Item.Color.b;
-			Datum[8] = Item.Enabled and 1 or 0;
-			Datum[9] = Item.Shadows and 1 or 0;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'PointLight' then
-			local Datum = Data.Items[Index];
-			Datum[10] = Item.Range;
-		end;
-
-		if Item.ClassName == 'SpotLight' then
-			local Datum = Data.Items[Index];
-			Datum[10] = Item.Range;
-			Datum[11] = Item.Angle;
-			Datum[12] = Item.Face.Value;
-		end;
-
-		if Item.ClassName == 'SurfaceLight' then
-			local Datum = Data.Items[Index];
-			Datum[10] = Item.Range;
-			Datum[11] = Item.Angle;
-			Datum[12] = Item.Face.Value;
-		end;
-
-		if Item.ClassName == 'Smoke' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Enabled and 1 or 0;
-			Datum[5] = Item.Color.r;
-			Datum[6] = Item.Color.g;
-			Datum[7] = Item.Color.b;
-			Datum[8] = Item.Size;
-			Datum[9] = Item.RiseVelocity;
-			Datum[10] = Item.Opacity;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Fire' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Enabled and 1 or 0;
-			Datum[5] = Item.Color.r;
-			Datum[6] = Item.Color.g;
-			Datum[7] = Item.Color.b;
-			Datum[8] = Item.SecondaryColor.r;
-			Datum[9] = Item.SecondaryColor.g;
-			Datum[10] = Item.SecondaryColor.b;
-			Datum[11] = Item.Heat;
-			Datum[12] = Item.Size;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Sparkles' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.Enabled and 1 or 0;
-			Datum[5] = Item.SparkleColor.r;
-			Datum[6] = Item.SparkleColor.g;
-			Datum[7] = Item.SparkleColor.b;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Model' then
-			local Datum = {};
-			Datum[1] = Types[Item.ClassName];
-			Datum[2] = Keys[Item.Parent] or 0;
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name;
-			Datum[4] = Item.PrimaryPart and Keys[Item.PrimaryPart] or 0;
-			Data.Items[Index] = Datum;
-		end;
-
-		if Item.ClassName == 'Folder' then
-			local Datum = {}
-			Datum[1] = Types[Item.ClassName]
-			Datum[2] = Keys[Item.Parent] or 0
-			Datum[3] = Item.Name == DefaultNames[Item.ClassName] and '' or Item.Name
-			Data.Items[Index] = Datum
-		end
-
-		-- Spread the workload over time to avoid locking up the CPU
-		if Index % 100 == 0 then
-			wait(0.01);
-		end;
-
-	end;
-
-	-- Return the serialized data
-	return HttpService:JSONEncode(Data);
-
-end;
-
-function Serialization.InflateBuildData(Data)
-	-- Returns an inflated version of the given build data
-
-	local Build = {};
-	local Instances = {};
-
-	-- Create each instance
-	for Index, Datum in ipairs(Data.Items) do
-
-		-- Inflate BaseParts
-		if Datum[1] == Types.Part
-			or Datum[1] == Types.WedgePart
-			or Datum[1] == Types.CornerWedgePart
-			or Datum[1] == Types.VehicleSeat
-			or Datum[1] == Types.Seat
-			or Datum[1] == Types.TrussPart
-		then
-			local Item = Instance.new(Support.FindTableOccurrence(Types, Datum[1]));
-			Item.Size = Vector3.new(unpack(Support.Slice(Datum, 4, 6)));
-			Item.CFrame = CFrame.new(unpack(Support.Slice(Datum, 7, 18)));
-			Item.Color = Color3.new(Datum[19], Datum[20], Datum[21]);
-			Item.Material = Datum[22];
-			Item.Anchored = Datum[23] == 1;
-			Item.CanCollide = Datum[24] == 1;
-			Item.Reflectance = Datum[25];
-			Item.Transparency = Datum[26];
-			Item.TopSurface = Datum[27];
-			Item.BottomSurface = Datum[28];
-			Item.FrontSurface = Datum[29];
-			Item.BackSurface = Datum[30];
-			Item.LeftSurface = Datum[31];
-			Item.RightSurface = Datum[32];
-
-			-- Register the part
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate specific Part properties
-		if Datum[1] == Types.Part then
-			local Item = Instances[Index];
-			Item.Shape = Datum[33];
-		end;
-
-		-- Inflate specific VehicleSeat properties
-		if Datum[1] == Types.VehicleSeat then
-			local Item = Instances[Index];
-			Item.MaxSpeed = Datum[33];
-			Item.Torque = Datum[34];
-			Item.TurnSpeed = Datum[35];
-		end;
-
-		-- Inflate specific TrussPart properties
-		if Datum[1] == Types.TrussPart then
-			local Item = Instances[Index];
-			Item.Style = Datum[33];
-		end;
-
-		-- Inflate SpecialMesh instances
-		if Datum[1] == Types.SpecialMesh then
-			local Item = Instance.new('SpecialMesh');
-			Item.MeshType = Datum[4];
-			Item.MeshId = Datum[5];
-			Item.TextureId = Datum[6];
-			Item.Offset = Vector3.new(unpack(Support.Slice(Datum, 7, 9)));
-			Item.Scale = Vector3.new(unpack(Support.Slice(Datum, 10, 12)));
-			Item.VertexColor = Vector3.new(unpack(Support.Slice(Datum, 13, 15)));
-
-			-- Register the mesh
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate Decal instances
-		if Datum[1] == Types.Decal or Datum[1] == Types.Texture then
-			local Item = Instance.new(Support.FindTableOccurrence(Types, Datum[1]));
-			Item.Texture = Datum[4];
-			Item.Transparency = Datum[5];
-			Item.Face = Datum[6];
-
-			-- Register the Decal
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate specific Texture properties
-		if Datum[1] == Types.Texture then
-			local Item = Instances[Index];
-			Item.StudsPerTileU = Datum[7];
-			Item.StudsPerTileV = Datum[8];
-		end;
-
-		-- Inflate Light instances
-		if Datum[1] == Types.PointLight
-			or Datum[1] == Types.SpotLight
-			or Datum[1] == Types.SurfaceLight
-		then
-			local Item = Instance.new(Support.FindTableOccurrence(Types, Datum[1]));
-			Item.Brightness = Datum[4];
-			Item.Color = Color3.new(unpack(Support.Slice(Datum, 5, 7)));
-			Item.Enabled = Datum[8] == 1;
-			Item.Shadows = Datum[9] == 1;
-
-			-- Register the light
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate specific PointLight properties
-		if Datum[1] == Types.PointLight then
-			local Item = Instances[Index];
-			Item.Range = Datum[10];
-		end;
-
-		-- Inflate specific SpotLight properties
-		if Datum[1] == Types.SpotLight then
-			local Item = Instances[Index];
-			Item.Range = Datum[10];
-			Item.Angle = Datum[11];
-			Item.Face = Datum[12];
-		end;
-
-		-- Inflate specific SurfaceLight properties
-		if Datum[1] == Types.SurfaceLight then
-			local Item = Instances[Index];
-			Item.Range = Datum[10];
-			Item.Angle = Datum[11];
-			Item.Face = Datum[12];
-		end;
-
-		-- Inflate Smoke instances
-		if Datum[1] == Types.Smoke then
-			local Item = Instance.new('Smoke');
-			Item.Enabled = Datum[4] == 1;
-			Item.Color = Color3.new(unpack(Support.Slice(Datum, 5, 7)));
-			Item.Size = Datum[8];
-			Item.RiseVelocity = Datum[9];
-			Item.Opacity = Datum[10];
-
-			-- Register the smoke
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate Fire instances
-		if Datum[1] == Types.Fire then
-			local Item = Instance.new('Fire');
-			Item.Enabled = Datum[4] == 1;
-			Item.Color = Color3.new(unpack(Support.Slice(Datum, 5, 7)));
-			Item.SecondaryColor = Color3.new(unpack(Support.Slice(Datum, 8, 10)));
-			Item.Heat = Datum[11];
-			Item.Size = Datum[12];
-
-			-- Register the fire
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate Sparkles instances
-		if Datum[1] == Types.Sparkles then
-			local Item = Instance.new('Sparkles');
-			Item.Enabled = Datum[4] == 1;
-			Item.SparkleColor = Color3.new(unpack(Support.Slice(Datum, 5, 7)));
-
-			-- Register the instance
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate Model instances
-		if Datum[1] == Types.Model then
-			local Item = Instance.new('Model');
-
-			-- Register the model
-			Instances[Index] = Item;
-		end;
-
-		-- Inflate Folder instances
-		if Datum[1] == Types.Folder then
-			local Item = Instance.new('Folder')
-
-			-- Register the folder
-			Instances[Index] = Item
-		end
-
-	end;
-
-	-- Set object values on each instance
-	for Index, Datum in pairs(Data.Items) do
-
-		-- Get the item's instance
-		local Item = Instances[Index];
-
-		-- Set each item's parent and name
-		if Item and Datum[1] <= 18 then
-			Item.Name = (Datum[3] == '') and DefaultNames[Item.ClassName] or Datum[3];
-			if Datum[2] == 0 then
-				table.insert(Build, Item);
+		str = str .. "}"
+		return str
+	elseif typeof then
+		-- Check Roblox types
+		if typeof(v) == "Instance" then
+			return  (reprSettings.robloxFullName
+				and (reprSettings.robloxProperFullName and properFullName(v) or v:GetFullName())
+				or v.Name) .. (reprSettings.robloxClassName and ((" (%s)"):format(v.ClassName)) or "")
+		elseif typeof(v) == "Axes" then
+			local s = {}
+			if v.X then table.insert(s, repr(Enum.Axis.X, reprSettings)) end
+			if v.Y then table.insert(s, repr(Enum.Axis.Y, reprSettings)) end
+			if v.Z then table.insert(s, repr(Enum.Axis.Z, reprSettings)) end
+			return ("Axes.new(%s)"):format(table.concat(s, ", "))
+		elseif typeof(v) == "BrickColor" then
+			return ("BrickColor.new(%q)"):format(v.Name)
+		elseif typeof(v) == "CFrame" then
+			return ("CFrame.new(%s)"):format(table.concat({v:GetComponents()}, ", "))
+		elseif typeof(v) == "Color3" then
+			return ("Color3.new(%s, %s, %s)"):format(v.R, v.G, v.B)
+		elseif typeof(v) == "ColorSequence" then
+			if #v.Keypoints > 2 then
+				return ("ColorSequence.new(%s)"):format(repr(v.Keypoints, reprSettings))
 			else
-				Item.Parent = Instances[Datum[2]];
-			end;
-		end;
-
-		-- Set model primary parts
-		if Item and Datum[1] == 15 then
-			Item.PrimaryPart = (Datum[4] ~= 0) and Instances[Datum[4]] or nil;
-		end;
-
-	end;
-
-	-- Return the model
-	return Build;
-
-end;
-
--- Return the API
-return Serialization;
+				if v.Keypoints[1].Value == v.Keypoints[2].Value then
+					return ("ColorSequence.new(%s)"):format(repr(v.Keypoints[1].Value, reprSettings))
+				else
+					return ("ColorSequence.new(%s, %s)"):format(
+					repr(v.Keypoints[1].Value, reprSettings),
+					repr(v.Keypoints[2].Value, reprSettings)
+					)
+				end
+			end
+		elseif typeof(v) == "ColorSequenceKeypoint" then
+			return ("ColorSequenceKeypoint.new(%s, %s)"):format(v.Time, repr(v.Value, reprSettings))
+		elseif typeof(v) == "DockWidgetPluginGuiInfo" then
+			return ("DockWidgetPluginGuiInfo.new(%s, %s, %s, %s, %s, %s, %s)"):format(
+			repr(v.InitialDockState, reprSettings),
+			repr(v.InitialEnabled, reprSettings),
+			repr(v.InitialEnabledShouldOverrideRestore, reprSettings),
+			repr(v.FloatingXSize, reprSettings),
+			repr(v.FloatingYSize, reprSettings),
+			repr(v.MinWidth, reprSettings),
+			repr(v.MinHeight, reprSettings)
+			)
+		elseif typeof(v) == "Enums" then
+			return "Enums"
+		elseif typeof(v) == "Enum" then
+			return ("Enum.%s"):format(tostring(v))
+		elseif typeof(v) == "EnumItem" then
+			return ("Enum.%s.%s"):format(tostring(v.EnumType), v.Name)
+		elseif typeof(v) == "Faces" then
+			local s = {}
+			for _, enumItem in pairs(Enum.NormalId:GetEnumItems()) do
+				if v[enumItem.Name] then
+					table.insert(s, repr(enumItem, reprSettings))
+				end
+			end
+			return ("Faces.new(%s)"):format(table.concat(s, ", "))
+		elseif typeof(v) == "NumberRange" then
+			if v.Min == v.Max then
+				return ("NumberRange.new(%s)"):format(v.Min)
+			else
+				return ("NumberRange.new(%s, %s)"):format(v.Min, v.Max)
+			end
+		elseif typeof(v) == "NumberSequence" then
+			if #v.Keypoints > 2 then
+				return ("NumberSequence.new(%s)"):format(repr(v.Keypoints, reprSettings))
+			else
+				if v.Keypoints[1].Value == v.Keypoints[2].Value then
+					return ("NumberSequence.new(%s)"):format(v.Keypoints[1].Value)
+				else
+					return ("NumberSequence.new(%s, %s)"):format(v.Keypoints[1].Value, v.Keypoints[2].Value)
+				end
+			end
+		elseif typeof(v) == "NumberSequenceKeypoint" then
+			if v.Envelope ~= 0 then
+				return ("NumberSequenceKeypoint.new(%s, %s, %s)"):format(v.Time, v.Value, v.Envelope)
+			else
+				return ("NumberSequenceKeypoint.new(%s, %s)"):format(v.Time, v.Value)
+			end
+		elseif typeof(v) == "PathWaypoint" then
+			return ("PathWaypoint.new(%s, %s)"):format(
+			repr(v.Position, reprSettings),
+			repr(v.Action, reprSettings)
+			)
+		elseif typeof(v) == "PhysicalProperties" then
+			return ("PhysicalProperties.new(%s, %s, %s, %s, %s)"):format(
+			v.Density, v.Friction, v.Elasticity, v.FrictionWeight, v.ElasticityWeight
+			)
+		elseif typeof(v) == "Random" then
+			return "<Random>"
+		elseif typeof(v) == "Ray" then
+			return ("Ray.new(%s, %s)"):format(
+			repr(v.Origin, reprSettings),
+			repr(v.Direction, reprSettings)
+			)
+		elseif typeof(v) == "RBXScriptConnection" then
+			return "<RBXScriptConnection>"
+		elseif typeof(v) == "RBXScriptSignal" then
+			return "<RBXScriptSignal>"
+		elseif typeof(v) == "Rect" then
+			return ("Rect.new(%s, %s, %s, %s)"):format(
+			v.Min.X, v.Min.Y, v.Max.X, v.Max.Y
+			)
+		elseif typeof(v) == "Region3" then
+			local min = v.CFrame.p + v.Size * -.5
+			local max = v.CFrame.p + v.Size * .5
+			return ("Region3.new(%s, %s)"):format(
+			repr(min, reprSettings),
+			repr(max, reprSettings)
+			)
+		elseif typeof(v) == "Region3int16" then
+			return ("Region3int16.new(%s, %s)"):format(
+			repr(v.Min, reprSettings),
+			repr(v.Max, reprSettings)
+			)
+		elseif typeof(v) == "TweenInfo" then
+			return ("TweenInfo.new(%s, %s, %s, %s, %s, %s)"):format(
+			v.Time, repr(v.EasingStyle, reprSettings), repr(v.EasingDirection, reprSettings),
+			v.RepeatCount, repr(v.Reverses, reprSettings), v.DelayTime
+			)
+		elseif typeof(v) == "UDim" then
+			return ("UDim.new(%s, %s)"):format(
+			v.Scale, v.Offset
+			)
+		elseif typeof(v) == "UDim2" then
+			return ("UDim2.new(%s, %s, %s, %s)"):format(
+			v.X.Scale, v.X.Offset, v.Y.Scale, v.Y.Offset
+			)
+		elseif typeof(v) == "Vector2" then
+			return ("Vector2.new(%s, %s)"):format(v.X, v.Y)
+		elseif typeof(v) == "Vector2int16" then
+			return ("Vector2int16.new(%s, %s)"):format(v.X, v.Y)
+		elseif typeof(v) == "Vector3" then
+			return ("Vector3.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+		elseif typeof(v) == "Vector3int16" then
+			return ("Vector3int16.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+		elseif typeof(v) == "DateTime" then
+			return ("DateTime.fromIsoDate(%q)"):format(v:ToIsoDate())
+		else
+			return "<Roblox:" .. typeof(v) .. ">"
+		end
+	else
+		return "<" .. type(v) .. ">"
+	end
 end
-Serialization=Serialization()
 
-function F3XExport(TableOfParts)
-    local HttpService=game:GetService"HttpService"
-    local SerializedBuildData = Serialization.SerializeModel(TableOfParts);
-    
-    local Response = HttpService:JSONDecode(
-    	syn.request{
-    		Url = 'http://f3xteam.com/bt/export',
-    		Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-    		Body = HttpService:JSONEncode { data = SerializedBuildData, version = 3, userId = math.random(1,1000000) }
-    	}.Body
-    );
-    if Response then
-        pcall(function()setclipboard(tostring(Response.id))end)
-        return Response.id
-    end
-end
-return F3XExport
+return {F3XCollection, repr}
