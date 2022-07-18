@@ -1,279 +1,282 @@
-local defaultSettings = {
-	pretty = false;
-	robloxFullName = true;
-	robloxProperFullName = true;
-	robloxClassName = true;
-	tabs = true;
-	semicolons = true;
-	spaces = 3;
-	sortKeys = true;
-}
+if not toStringFunc then
+	local defaultSettings = {
+		pretty = false;
+		robloxFullName = true;
+		robloxProperFullName = true;
+		robloxClassName = true;
+		tabs = true;
+		semicolons = true;
+		spaces = 3;
+		sortKeys = true;
+	}
 
--- lua keywords
-local keywords = {["and"]=true, ["break"]=true, ["do"]=true, ["else"]=true,
-	["elseif"]=true, ["end"]=true, ["false"]=true, ["for"]=true, ["function"]=true,
-	["if"]=true, ["in"]=true, ["local"]=true, ["nil"]=true, ["not"]=true, ["or"]=true,
-	["repeat"]=true, ["return"]=true, ["then"]=true, ["true"]=true, ["until"]=true, ["while"]=true}
+	-- lua keywords
+	local keywords = {["and"]=true, ["break"]=true, ["do"]=true, ["else"]=true,
+		["elseif"]=true, ["end"]=true, ["false"]=true, ["for"]=true, ["function"]=true,
+		["if"]=true, ["in"]=true, ["local"]=true, ["nil"]=true, ["not"]=true, ["or"]=true,
+		["repeat"]=true, ["return"]=true, ["then"]=true, ["true"]=true, ["until"]=true, ["while"]=true}
 
-local function isLuaIdentifier(str)
-	if type(str) ~= "string" then return false end
-	-- must be nonempty
-	if str:len() == 0 then return false end
-	-- can only contain a-z, A-Z, 0-9 and underscore
-	if str:find("[^%s%a_]") then return false end
-	-- cannot begin with digit
-	if tonumber(str:sub(1, 1)) then return false end
-	-- cannot be keyword
-	if keywords[str] then return false end
-	return true
-end
-
--- works like Instance:GetFullName(), but invalid Lua identifiers are fixed (e.g. workspace["The Dude"].Humanoid)
-local function properFullName(object, usePeriod)
-	if object == nil or object == game then return "" end
-
-	local s = object.Name
-	local usePeriod = true
-	if not isLuaIdentifier(s) then
-		s = ("[%q]"):format(s)
-		usePeriod = false
+	local function isLuaIdentifier(str)
+		if type(str) ~= "string" then return false end
+		-- must be nonempty
+		if str:len() == 0 then return false end
+		-- can only contain a-z, A-Z, 0-9 and underscore
+		if str:find("[^%s%a_]") then return false end
+		-- cannot begin with digit
+		if tonumber(str:sub(1, 1)) then return false end
+		-- cannot be keyword
+		if keywords[str] then return false end
+		return true
 	end
 
-	if not object.Parent or object.Parent == game then
-		return s
-	else
-		return properFullName(object.Parent) .. (usePeriod and "." or "") .. s 
-	end
-end
+	-- works like Instance:GetFullName(), but invalid Lua identifiers are fixed (e.g. workspace["The Dude"].Humanoid)
+	local function properFullName(object, usePeriod)
+		if object == nil or object == game then return "" end
 
-local depth = 0
-local shown
-local INDENT
-local reprSettings
-
-function toStringFunc(value, reprSettings)
-	reprSettings = reprSettings or defaultSettings
-	INDENT = (" "):rep(reprSettings.spaces or defaultSettings.spaces)
-	if reprSettings.tabs then
-		INDENT = "\t"
-	end
-
-	local v = value --args[1]
-	local tabs = INDENT:rep(depth)
-
-	if depth == 0 then
-		shown = {}
-	end
-	if type(v) == "string" then
-		return ("%q"):format(v)
-	elseif type(v) == "number" then
-		if v == math.huge then return "math.huge" end
-		if v == -math.huge then return "-math.huge" end
-		return tonumber(v)
-	elseif type(v) == "boolean" then
-		return tostring(v)
-	elseif type(v) == "nil" then
-		return "nil"
-	elseif type(v) == "table" and type(v.__tostring) == "function" then
-		return tostring(v.__tostring(v))
-	elseif type(v) == "table" and getmetatable(v) and type(getmetatable(v).__tostring) == "function" then
-		return tostring(getmetatable(v).__tostring(v))
-	elseif type(v) == "table" then
-		if shown[v] then return "{CYCLIC}" end
-		shown[v] = true
-		local str = "{" .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or "")
-		local isArray = true
-		for k, v in pairs(v) do
-			if type(k) ~= "number" then
-				isArray = false
-				break
-			end
+		local s = object.Name
+		local usePeriod = true
+		if not isLuaIdentifier(s) then
+			s = ("[%q]"):format(s)
+			usePeriod = false
 		end
-		if isArray then
-			for i = 1, #v do
-				if i ~= 1 then
-					str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
-				end
-				depth = depth + 1
-				str = str .. toStringFunc(v[i], reprSettings)
-				depth = depth - 1
-			end
+
+		if not object.Parent or object.Parent == game then
+			return s
 		else
-			local keyOrder = {}
-			local keyValueStrings = {}
+			return properFullName(object.Parent) .. (usePeriod and "." or "") .. s 
+		end
+	end
+
+	local depth = 0
+	local shown
+	local INDENT
+	local reprSettings
+
+	function toStringFunc(value, reprSettings)
+		reprSettings = reprSettings or defaultSettings
+		INDENT = (" "):rep(reprSettings.spaces or defaultSettings.spaces)
+		if reprSettings.tabs then
+			INDENT = "\t"
+		end
+
+		local v = value --args[1]
+		local tabs = INDENT:rep(depth)
+
+		if depth == 0 then
+			shown = {}
+		end
+		if type(v) == "string" then
+			return ("%q"):format(v)
+		elseif type(v) == "number" then
+			if v == math.huge then return "math.huge" end
+			if v == -math.huge then return "-math.huge" end
+			return tonumber(v)
+		elseif type(v) == "boolean" then
+			return tostring(v)
+		elseif type(v) == "nil" then
+			return "nil"
+		elseif type(v) == "table" and type(v.__tostring) == "function" then
+			return tostring(v.__tostring(v))
+		elseif type(v) == "table" and getmetatable(v) and type(getmetatable(v).__tostring) == "function" then
+			return tostring(getmetatable(v).__tostring(v))
+		elseif type(v) == "table" then
+			if shown[v] then return "{CYCLIC}" end
+			shown[v] = true
+			local str = "{" .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or "")
+			local isArray = true
 			for k, v in pairs(v) do
-				depth = depth + 1
-				local kStr = isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]")
-				local vStr = toStringFunc(v, reprSettings)
-				--[[str = str .. ("%s = %s"):format(
-					isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]"),
-					toStringFunc(v, reprSettings)
-				)]]
-				table.insert(keyOrder, kStr)
-				keyValueStrings[kStr] = vStr
-				depth = depth - 1
-			end
-			if reprSettings.sortKeys then table.sort(keyOrder) end
-			local first = true
-			for _, kStr in pairs(keyOrder) do
-				if not first then
-					str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+				if type(k) ~= "number" then
+					isArray = false
+					break
 				end
-				str = str .. ("%s = %s"):format(kStr, keyValueStrings[kStr])
-				first = false
 			end
-		end
-		shown[v] = false
-		if reprSettings.pretty then
-			str = str .. "\n" .. tabs
-		end
-		str = str .. "}"
-		return str
-	elseif typeof then
-		-- Check Roblox types
-		if typeof(v) == "Instance" then
-			return  (reprSettings.robloxFullName
-				and (reprSettings.robloxProperFullName and properFullName(v) or v:GetFullName())
-				or v.Name) .. (reprSettings.robloxClassName and ((" (%s)"):format(v.ClassName)) or "")
-		elseif typeof(v) == "Axes" then
-			local s = {}
-			if v.X then table.insert(s, toStringFunc(Enum.Axis.X, reprSettings)) end
-			if v.Y then table.insert(s, toStringFunc(Enum.Axis.Y, reprSettings)) end
-			if v.Z then table.insert(s, toStringFunc(Enum.Axis.Z, reprSettings)) end
-			return ("Axes.new(%s)"):format(table.concat(s, ", "))
-		elseif typeof(v) == "BrickColor" then
-			return ("BrickColor.new(%q)"):format(v.Name)
-		elseif typeof(v) == "CFrame" then
-			return ("CFrame.new(%s)"):format(table.concat({v:GetComponents()}, ", "))
-		elseif typeof(v) == "Color3" then
-			return ("Color3.new(%s, %s, %s)"):format(v.R, v.G, v.B)
-		elseif typeof(v) == "ColorSequence" then
-			if #v.Keypoints > 2 then
-				return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
+			if isArray then
+				for i = 1, #v do
+					if i ~= 1 then
+						str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+					end
+					depth = depth + 1
+					str = str .. toStringFunc(v[i], reprSettings)
+					depth = depth - 1
+				end
 			else
-				if v.Keypoints[1].Value == v.Keypoints[2].Value then
-					return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints[1].Value, reprSettings))
+				local keyOrder = {}
+				local keyValueStrings = {}
+				for k, v in pairs(v) do
+					depth = depth + 1
+					local kStr = isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]")
+					local vStr = toStringFunc(v, reprSettings)
+					--[[str = str .. ("%s = %s"):format(
+						isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]"),
+						toStringFunc(v, reprSettings)
+					)]]
+					table.insert(keyOrder, kStr)
+					keyValueStrings[kStr] = vStr
+					depth = depth - 1
+				end
+				if reprSettings.sortKeys then table.sort(keyOrder) end
+				local first = true
+				for _, kStr in pairs(keyOrder) do
+					if not first then
+						str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+					end
+					str = str .. ("%s = %s"):format(kStr, keyValueStrings[kStr])
+					first = false
+				end
+			end
+			shown[v] = false
+			if reprSettings.pretty then
+				str = str .. "\n" .. tabs
+			end
+			str = str .. "}"
+			return str
+		elseif typeof then
+			-- Check Roblox types
+			if typeof(v) == "Instance" then
+				return  (reprSettings.robloxFullName
+					and (reprSettings.robloxProperFullName and properFullName(v) or v:GetFullName())
+					or v.Name) .. (reprSettings.robloxClassName and ((" (%s)"):format(v.ClassName)) or "")
+			elseif typeof(v) == "Axes" then
+				local s = {}
+				if v.X then table.insert(s, toStringFunc(Enum.Axis.X, reprSettings)) end
+				if v.Y then table.insert(s, toStringFunc(Enum.Axis.Y, reprSettings)) end
+				if v.Z then table.insert(s, toStringFunc(Enum.Axis.Z, reprSettings)) end
+				return ("Axes.new(%s)"):format(table.concat(s, ", "))
+			elseif typeof(v) == "BrickColor" then
+				return ("BrickColor.new(%q)"):format(v.Name)
+			elseif typeof(v) == "CFrame" then
+				return ("CFrame.new(%s)"):format(table.concat({v:GetComponents()}, ", "))
+			elseif typeof(v) == "Color3" then
+				return ("Color3.new(%s, %s, %s)"):format(v.R, v.G, v.B)
+			elseif typeof(v) == "ColorSequence" then
+				if #v.Keypoints > 2 then
+					return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
 				else
-					return ("ColorSequence.new(%s, %s)"):format(
-					toStringFunc(v.Keypoints[1].Value, reprSettings),
-					toStringFunc(v.Keypoints[2].Value, reprSettings)
-					)
+					if v.Keypoints[1].Value == v.Keypoints[2].Value then
+						return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints[1].Value, reprSettings))
+					else
+						return ("ColorSequence.new(%s, %s)"):format(
+						toStringFunc(v.Keypoints[1].Value, reprSettings),
+						toStringFunc(v.Keypoints[2].Value, reprSettings)
+						)
+					end
 				end
-			end
-		elseif typeof(v) == "ColorSequenceKeypoint" then
-			return ("ColorSequenceKeypoint.new(%s, %s)"):format(v.Time, toStringFunc(v.Value, reprSettings))
-		elseif typeof(v) == "DockWidgetPluginGuiInfo" then
-			return ("DockWidgetPluginGuiInfo.new(%s, %s, %s, %s, %s, %s, %s)"):format(
-			toStringFunc(v.InitialDockState, reprSettings),
-			toStringFunc(v.InitialEnabled, reprSettings),
-			toStringFunc(v.InitialEnabledShouldOverrideRestore, reprSettings),
-			toStringFunc(v.FloatingXSize, reprSettings),
-			toStringFunc(v.FloatingYSize, reprSettings),
-			toStringFunc(v.MinWidth, reprSettings),
-			toStringFunc(v.MinHeight, reprSettings)
-			)
-		elseif typeof(v) == "Enums" then
-			return "Enums"
-		elseif typeof(v) == "Enum" then
-			return ("Enum.%s"):format(tostring(v))
-		elseif typeof(v) == "EnumItem" then
-			return ("Enum.%s.%s"):format(tostring(v.EnumType), v.Name)
-		elseif typeof(v) == "Faces" then
-			local s = {}
-			for _, enumItem in pairs(Enum.NormalId:GetEnumItems()) do
-				if v[enumItem.Name] then
-					table.insert(s, toStringFunc(enumItem, reprSettings))
+			elseif typeof(v) == "ColorSequenceKeypoint" then
+				return ("ColorSequenceKeypoint.new(%s, %s)"):format(v.Time, toStringFunc(v.Value, reprSettings))
+			elseif typeof(v) == "DockWidgetPluginGuiInfo" then
+				return ("DockWidgetPluginGuiInfo.new(%s, %s, %s, %s, %s, %s, %s)"):format(
+				toStringFunc(v.InitialDockState, reprSettings),
+				toStringFunc(v.InitialEnabled, reprSettings),
+				toStringFunc(v.InitialEnabledShouldOverrideRestore, reprSettings),
+				toStringFunc(v.FloatingXSize, reprSettings),
+				toStringFunc(v.FloatingYSize, reprSettings),
+				toStringFunc(v.MinWidth, reprSettings),
+				toStringFunc(v.MinHeight, reprSettings)
+				)
+			elseif typeof(v) == "Enums" then
+				return "Enums"
+			elseif typeof(v) == "Enum" then
+				return ("Enum.%s"):format(tostring(v))
+			elseif typeof(v) == "EnumItem" then
+				return ("Enum.%s.%s"):format(tostring(v.EnumType), v.Name)
+			elseif typeof(v) == "Faces" then
+				local s = {}
+				for _, enumItem in pairs(Enum.NormalId:GetEnumItems()) do
+					if v[enumItem.Name] then
+						table.insert(s, toStringFunc(enumItem, reprSettings))
+					end
 				end
-			end
-			return ("Faces.new(%s)"):format(table.concat(s, ", "))
-		elseif typeof(v) == "NumberRange" then
-			if v.Min == v.Max then
-				return ("NumberRange.new(%s)"):format(v.Min)
-			else
-				return ("NumberRange.new(%s, %s)"):format(v.Min, v.Max)
-			end
-		elseif typeof(v) == "NumberSequence" then
-			if #v.Keypoints > 2 then
-				return ("NumberSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
-			else
-				if v.Keypoints[1].Value == v.Keypoints[2].Value then
-					return ("NumberSequence.new(%s)"):format(v.Keypoints[1].Value)
+				return ("Faces.new(%s)"):format(table.concat(s, ", "))
+			elseif typeof(v) == "NumberRange" then
+				if v.Min == v.Max then
+					return ("NumberRange.new(%s)"):format(v.Min)
 				else
-					return ("NumberSequence.new(%s, %s)"):format(v.Keypoints[1].Value, v.Keypoints[2].Value)
+					return ("NumberRange.new(%s, %s)"):format(v.Min, v.Max)
 				end
-			end
-		elseif typeof(v) == "NumberSequenceKeypoint" then
-			if v.Envelope ~= 0 then
-				return ("NumberSequenceKeypoint.new(%s, %s, %s)"):format(v.Time, v.Value, v.Envelope)
+			elseif typeof(v) == "NumberSequence" then
+				if #v.Keypoints > 2 then
+					return ("NumberSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
+				else
+					if v.Keypoints[1].Value == v.Keypoints[2].Value then
+						return ("NumberSequence.new(%s)"):format(v.Keypoints[1].Value)
+					else
+						return ("NumberSequence.new(%s, %s)"):format(v.Keypoints[1].Value, v.Keypoints[2].Value)
+					end
+				end
+			elseif typeof(v) == "NumberSequenceKeypoint" then
+				if v.Envelope ~= 0 then
+					return ("NumberSequenceKeypoint.new(%s, %s, %s)"):format(v.Time, v.Value, v.Envelope)
+				else
+					return ("NumberSequenceKeypoint.new(%s, %s)"):format(v.Time, v.Value)
+				end
+			elseif typeof(v) == "PathWaypoint" then
+				return ("PathWaypoint.new(%s, %s)"):format(
+				toStringFunc(v.Position, reprSettings),
+				toStringFunc(v.Action, reprSettings)
+				)
+			elseif typeof(v) == "PhysicalProperties" then
+				return ("PhysicalProperties.new(%s, %s, %s, %s, %s)"):format(
+				v.Density, v.Friction, v.Elasticity, v.FrictionWeight, v.ElasticityWeight
+				)
+			elseif typeof(v) == "Random" then
+				return "<Random>"
+			elseif typeof(v) == "Ray" then
+				return ("Ray.new(%s, %s)"):format(
+				toStringFunc(v.Origin, reprSettings),
+				toStringFunc(v.Direction, reprSettings)
+				)
+			elseif typeof(v) == "RBXScriptConnection" then
+				return "<RBXScriptConnection>"
+			elseif typeof(v) == "RBXScriptSignal" then
+				return "<RBXScriptSignal>"
+			elseif typeof(v) == "Rect" then
+				return ("Rect.new(%s, %s, %s, %s)"):format(
+				v.Min.X, v.Min.Y, v.Max.X, v.Max.Y
+				)
+			elseif typeof(v) == "Region3" then
+				local min = v.CFrame.p + v.Size * -.5
+				local max = v.CFrame.p + v.Size * .5
+				return ("Region3.new(%s, %s)"):format(
+				toStringFunc(min, reprSettings),
+				toStringFunc(max, reprSettings)
+				)
+			elseif typeof(v) == "Region3int16" then
+				return ("Region3int16.new(%s, %s)"):format(
+				toStringFunc(v.Min, reprSettings),
+				toStringFunc(v.Max, reprSettings)
+				)
+			elseif typeof(v) == "TweenInfo" then
+				return ("TweenInfo.new(%s, %s, %s, %s, %s, %s)"):format(
+				v.Time, toStringFunc(v.EasingStyle, reprSettings), toStringFunc(v.EasingDirection, reprSettings),
+				v.RepeatCount, toStringFunc(v.Reverses, reprSettings), v.DelayTime
+				)
+			elseif typeof(v) == "UDim" then
+				return ("UDim.new(%s, %s)"):format(
+				v.Scale, v.Offset
+				)
+			elseif typeof(v) == "UDim2" then
+				return ("UDim2.new(%s, %s, %s, %s)"):format(
+				v.X.Scale, v.X.Offset, v.Y.Scale, v.Y.Offset
+				)
+			elseif typeof(v) == "Vector2" then
+				return ("Vector2.new(%s, %s)"):format(v.X, v.Y)
+			elseif typeof(v) == "Vector2int16" then
+				return ("Vector2int16.new(%s, %s)"):format(v.X, v.Y)
+			elseif typeof(v) == "Vector3" then
+				return ("Vector3.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+			elseif typeof(v) == "Vector3int16" then
+				return ("Vector3int16.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+			elseif typeof(v) == "DateTime" then
+				return ("DateTime.fromIsoDate(%q)"):format(v:ToIsoDate())
 			else
-				return ("NumberSequenceKeypoint.new(%s, %s)"):format(v.Time, v.Value)
+				return "<Roblox:" .. typeof(v) .. ">"
 			end
-		elseif typeof(v) == "PathWaypoint" then
-			return ("PathWaypoint.new(%s, %s)"):format(
-			toStringFunc(v.Position, reprSettings),
-			toStringFunc(v.Action, reprSettings)
-			)
-		elseif typeof(v) == "PhysicalProperties" then
-			return ("PhysicalProperties.new(%s, %s, %s, %s, %s)"):format(
-			v.Density, v.Friction, v.Elasticity, v.FrictionWeight, v.ElasticityWeight
-			)
-		elseif typeof(v) == "Random" then
-			return "<Random>"
-		elseif typeof(v) == "Ray" then
-			return ("Ray.new(%s, %s)"):format(
-			toStringFunc(v.Origin, reprSettings),
-			toStringFunc(v.Direction, reprSettings)
-			)
-		elseif typeof(v) == "RBXScriptConnection" then
-			return "<RBXScriptConnection>"
-		elseif typeof(v) == "RBXScriptSignal" then
-			return "<RBXScriptSignal>"
-		elseif typeof(v) == "Rect" then
-			return ("Rect.new(%s, %s, %s, %s)"):format(
-			v.Min.X, v.Min.Y, v.Max.X, v.Max.Y
-			)
-		elseif typeof(v) == "Region3" then
-			local min = v.CFrame.p + v.Size * -.5
-			local max = v.CFrame.p + v.Size * .5
-			return ("Region3.new(%s, %s)"):format(
-			toStringFunc(min, reprSettings),
-			toStringFunc(max, reprSettings)
-			)
-		elseif typeof(v) == "Region3int16" then
-			return ("Region3int16.new(%s, %s)"):format(
-			toStringFunc(v.Min, reprSettings),
-			toStringFunc(v.Max, reprSettings)
-			)
-		elseif typeof(v) == "TweenInfo" then
-			return ("TweenInfo.new(%s, %s, %s, %s, %s, %s)"):format(
-			v.Time, toStringFunc(v.EasingStyle, reprSettings), toStringFunc(v.EasingDirection, reprSettings),
-			v.RepeatCount, toStringFunc(v.Reverses, reprSettings), v.DelayTime
-			)
-		elseif typeof(v) == "UDim" then
-			return ("UDim.new(%s, %s)"):format(
-			v.Scale, v.Offset
-			)
-		elseif typeof(v) == "UDim2" then
-			return ("UDim2.new(%s, %s, %s, %s)"):format(
-			v.X.Scale, v.X.Offset, v.Y.Scale, v.Y.Offset
-			)
-		elseif typeof(v) == "Vector2" then
-			return ("Vector2.new(%s, %s)"):format(v.X, v.Y)
-		elseif typeof(v) == "Vector2int16" then
-			return ("Vector2int16.new(%s, %s)"):format(v.X, v.Y)
-		elseif typeof(v) == "Vector3" then
-			return ("Vector3.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
-		elseif typeof(v) == "Vector3int16" then
-			return ("Vector3int16.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
-		elseif typeof(v) == "DateTime" then
-			return ("DateTime.fromIsoDate(%q)"):format(v:ToIsoDate())
 		else
-			return "<Roblox:" .. typeof(v) .. ">"
+			return "<" .. type(v) .. ">"
 		end
-	else
-		return "<" .. type(v) .. ">"
 	end
 end
+
 -- Serializer [by CloneTrooper]
 -- Amazing serializer by the clonetrooper, I just amalgamated it to two scripts [pain] dont open the api script or you'll crash lol
 do -- util
@@ -485,7 +488,7 @@ do -- getAPI
 			inheritanceMap[classApi.Name] = superRoute
 		end
 
-		local function getProperties(class, pluginContext)
+		function getProperties(class, pluginContext)
 			if pluginContext == nil then
 				pluginError("pluginContext must be passed to API.getProperties")
 			end
@@ -518,7 +521,7 @@ do -- getAPI
 			end
 		end
 
-		local function isService(class)
+		function isService(class)
 			local map = classMap[class]
 			return map["$service"]
 		end
@@ -571,10 +574,6 @@ local make_verbose = false
 local parent_highest_ancestor = true
 local handle_big_output = true
 local make_module = false
-
-local success, API = getAPI()
-local isService = API.isService
-local getProperties = API.getProperties
 
 local function makeFullName(obj)
 	if obj == game then
@@ -667,6 +666,9 @@ end
 
 local function serializeObject(nameList, obj)
 	local className = obj.ClassName
+	if not isService and not getProperties then
+		getAPI()
+	end
 	if isService(className) then
 		pluginWarn("cannot serialize services")
 		return false
@@ -1079,4 +1081,4 @@ function serialize(obj)
 	return Return:gsub("\n", " ")
 end
 
-return {toStringFunc, serialize, apiJson}
+return serialize
