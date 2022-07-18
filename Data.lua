@@ -1487,7 +1487,7 @@ Ib.Parent=Hb
 
 
 local defaultSettings = {
-	pretty = false;
+	pretty = true;
 	robloxFullName = true;
 	robloxProperFullName = true;
 	robloxClassName = true;
