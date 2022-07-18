@@ -1927,12 +1927,14 @@ do -- getAPI
 	end
 	function getAPI()
 		local apiJson = typeof(settings)=="table" and settings.apiJson
-		if typeof(settings)=="table" and not apiJson then
-			apiJson =  settings.loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
-			settings.apiJson = apiJson
-			pcall(function()
-				UpdateFile()	
-			end)
+		if not apiJson then
+			apiJson =  loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
+			if typeof(settings)=="table" then
+				settings.apiJson = apiJson
+				pcall(function()
+					UpdateFile()
+				end)
+			end
 		end
 		local classMap = {}
 		local inheritanceMap = {}
