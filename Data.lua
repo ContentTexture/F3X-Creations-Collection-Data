@@ -1926,7 +1926,7 @@ do -- getAPI
 		end
 	end
 	function getAPI()
-		_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"}.Body)()
+		_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
 
 		local apiJson = _G.apiJson
 		local classMap = {}
