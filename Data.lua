@@ -1926,9 +1926,14 @@ do -- getAPI
 		end
 	end
 	function getAPI()
-		_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
-
-		local apiJson = _G.apiJson
+		local apiJson = typeof(settings)=="table" and settings.apiJson
+		if typeof(settings)=="table" and not apiJson then
+			apiJson =  settings.loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
+			settings.apiJson = apiJson
+			pcall(function()
+				UpdateFile()	
+			end)
+		end
 		local classMap = {}
 		local inheritanceMap = {}
 		local classCache = {
