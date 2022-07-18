@@ -1486,23 +1486,17 @@ Ib.Parent=Hb
 
 
 
-function Return(settings)
-	local Request = Request or function(Table)
-		local Success, Return = pcall(function()
-			return syn.request(Table)
-		end)
-		if Success then
-			return Return.Body
-		else
-			SendMsg("ERROR: Request failure: "..Return, setting.MessageStyle.Error_TextColor)
-		end
+local Request = Request or function(Table)
+	local Success, Return = pcall(function()
+		return syn.request(Table)
+	end)
+	if Success then
+		return Return.Body
+	else
+		SendMsg("ERROR: Request failure: "..Return, setting.MessageStyle.Error_TextColor)
 	end
-	local Return = settings and settings.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
-	if settings and not settings.apiJson then
-		settings.apiJson = Return
-	end
-	
-	return {F3XCollection, unpack(Return)}
 end
-print"Loaded data!"
-return Return
+_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
+
+warn"Loaded data!\nScripted by Humilitating"
+return {F3XCollection, unpack(_G.apiJson)}
