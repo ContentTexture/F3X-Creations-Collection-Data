@@ -1895,6 +1895,7 @@ do -- getAPI
 		Url = API_URL,
 		Method = "GET",
 	}
+	print(Request, "#1")
 	Request = Request or function Request(Table)
 		local Success, Return = pcall(function()
 			return syn.request(Table)
@@ -1906,6 +1907,7 @@ do -- getAPI
 		end
 	end
 	function getAPI()
+		print(Request, loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"}.Body)
 		_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"}.Body)()
 		
 		local apiJson = _G.apiJson
