@@ -826,7 +826,7 @@ Ma.FontSize = Enum.FontSize.Size14
 Ma.TextStrokeTransparency = 0.5
 Ma.TextSize = 14
 Ma.TextColor3 = Color3.new(1, 1, 1)
-Ma.Text = "Doomspire Brickbattle 2.0 [Discontinued]"
+Ma.Text = "..."
 Ma.TextWrap = true
 Ma.Font = Enum.Font.SourceSansBold
 Ma.TextWrapped = true
@@ -1773,9 +1773,14 @@ local Request = Request or function(Table)
 	end
 end
 function serialize(...)
-	_G.apiJson = _G.apiJson or loadstring(Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})()
+	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua") or Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
+	_G.apiJson = _G.apiJson or loadstring(X)()
+
+	if WriteFile and not ReadFile"APIJson.lua" then
+		WriteFile("APIJson.lua", X)
+	end
 	return _G.apiJson(...)
 end
 
 warn"Loaded data!\nScripted by Humilitating"
-return {F3XCollection, toStringFunc, serialize}
+return {F3XCollection, toStringFunc, serialize, F3XImport, F3XExport}
