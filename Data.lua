@@ -1772,6 +1772,10 @@ local Request = Request or function(Table)
 		SendMsg("ERROR: Request failure: "..Return, setting.MessageStyle.Error_TextColor)
 	end
 end
+if ReadFile and not _G.apiJson then
+	local Success, apiJson = pcall(function(X)return loadstring(X)end, ReadFile"APIJson.lua")
+	if Success then _G.apiJson = apiJson end
+end
 function serialize(...)
 	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua") or Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
 	_G.apiJson = _G.apiJson or loadstring(X)()
