@@ -698,6 +698,7 @@ local function serializeObject(nameList, obj)
 	local c = 2
 	for _, name in ipairs(getProperties(className, is_plugin_context)) do
 		if name ~= "Parent" then
+			game:GetService"RunService":Wait()
 			local success, value = pcall(getProperty, obj, name)
 			if success then
 				if defaultState[name] ~= value then
