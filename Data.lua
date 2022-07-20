@@ -1777,7 +1777,7 @@ if ReadFile and not _G.apiJson then
 	if Success then _G.apiJson = apiJson end
 end
 function serialize(...)
-	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua") or Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
+	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua") or pcall(SendMsg, "Serializing, please wait..")~="" and Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
 	_G.apiJson = _G.apiJson or loadstring(X)()
 
 	if WriteFile and not ReadFile"APIJson.lua" then
