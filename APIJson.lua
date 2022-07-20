@@ -667,7 +667,9 @@ end
 local function serializeObject(nameList, obj)
 	local className = obj.ClassName
 	if not isService and not getProperties then
-		getAPI()
+		local success, API = getAPI()
+		isService = API.isService
+		getProperties = API.getProperties
 	end
 	if isService(className) then
 		pluginWarn("cannot serialize services")
