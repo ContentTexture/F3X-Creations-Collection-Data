@@ -1762,6 +1762,7 @@ function toStringFunc(value, reprSettings)
 		return "<" .. type(v) .. ">"
 	end
 end
+
 local Request = Request or function(Table)
 	local Success, Return = pcall(function()
 		return syn.request(Table)
@@ -1769,21 +1770,32 @@ local Request = Request or function(Table)
 	if Success then
 		return Return.Body
 	else
-		SendMsg("ERROR: Request failure: "..Return, setting.MessageStyle.Error_TextColor)
+		SendMsg("ERROR: Request failure: "..Return, settings.MessageStyle.Error_TextColor)
 	end
 end
 if ReadFile and not _G.apiJson then
 	local Success, apiJson = pcall(function(X)return loadstring(X)()end, ReadFile"APIJson.lua")
 	if Success then _G.apiJson = apiJson end
 end
-function serialize(...)
+
+function getAPI()
 	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua") or pcall(SendMsg, "Serializing, please wait..")~="" and Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
 	_G.apiJson = _G.apiJson or loadstring(X)()
 
 	if WriteFile and not ReadFile"APIJson.lua" then
 		WriteFile("APIJson.lua", X)
 	end
-	return _G.apiJson(...)
+	return _G.apiJson
+end
+
+function serialize(...)
+	return getAPI()[1](...)
+end
+function F3XImport(...)
+	return getAPI()[2](...)
+end
+function F3XExport(...)
+	return getAPI()[3](...)
 end
 
 warn"Loaded data!\nScripted by Humilitating"
