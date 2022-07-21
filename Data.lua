@@ -325,7 +325,7 @@ local K = Instance.new("TextButton")
 K.Name = "Context2"
 K.Size = UDim2.new(0.2705053389072418, 0, 0.7105733156204224, 0)
 K.BackgroundTransparency = 1
-K.Position = UDim2.new(0.7445592284202576, 0, 0.9613639116287231, 0)
+K.Position = UDim2.new(0.7445592284202576, 0, 1.087, 0)
 K.BackgroundColor3 = Color3.new(1, 1, 1)
 K.FontSize = Enum.FontSize.Size14
 K.TextTransparency = 1
@@ -1768,8 +1768,7 @@ if ReadFile and not _G.apiJson then
 	coroutine.wrap(function()
 		wait(2.35)
 		local Success, apiJson = pcall(function(X)return loadstring(X)()end, ReadFile"APIJson.lua")
-		if Success then _G.apiJson = apiJson end
-		print"Loaded APIJson for serialization"
+		if Success then _G.apiJson = apiJson print"Loaded APIJson for serialization" end
 	end)()
 end
 
@@ -1780,6 +1779,7 @@ function getAPI()
 	if WriteFile and not ReadFile"APIJson.lua" then
 		WriteFile("APIJson.lua", X)
 	end
+	warn"Loaded API dump"
 	return _G.apiJson
 end
 
