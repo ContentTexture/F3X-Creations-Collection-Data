@@ -1774,8 +1774,12 @@ local Request = Request or function(Table)
 	end
 end
 if ReadFile and not _G.apiJson then
-	local Success, apiJson = pcall(function(X)return loadstring(X)()end, ReadFile"APIJson.lua")
-	if Success then _G.apiJson = apiJson end
+	coroutine.wrap(function()
+		wait(2.35)
+		local Success, apiJson = pcall(function(X)return loadstring(X)()end, ReadFile"APIJson.lua")
+		if Success then _G.apiJson = apiJson end
+		print"Loaded APIJson for serialization"
+	end)()
 end
 
 function getAPI()

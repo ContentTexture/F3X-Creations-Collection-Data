@@ -387,6 +387,15 @@ do -- getAPI
 
 	local PRELOAD_CLASSES = {
 		"Part",
+		"TrussPart",
+		"WedgePart",
+		"UnionOperation",
+		"Decal",
+		"ClickDetector",
+		"Beam",
+		"Attachment",
+		"WeldConstraint",
+		"HingeConstraint",
 		"Frame",
 		"ScrollingFrame",
 		"TextLabel",
@@ -572,6 +581,8 @@ local default_state_check = {}
 local is_plugin_context = true
 local make_verbose = false
 local parent_highest_ancestor = false
+local return_highest_ancestor = true
+
 local handle_big_output = true
 local make_module = false
 
@@ -741,6 +752,7 @@ end
 function serialize(obj)
 	obj = typeof(obj)=="table"and obj or {obj}
 	local Return=""
+	local topParent
 	for _, obj in pairs(obj) do
 		local canIndex = pcall(getProperty, obj, "Name")
 		if not canIndex then
@@ -804,279 +816,121 @@ function serialize(obj)
 			end
 		end
 
-		local topParent = ""
-		if parent_highest_ancestor then
-			topParent = makeFullName(obj.Parent)
+		if return_highest_ancestor and (not topParent or topParent=="") then
+			topParent = objName
 		end
 
-		if #actualDescendants + 1 > LOCAL_VARIABLE_LIMIT or totalLen > 199999 then
-			if handle_big_output then
-				local childString = make_verbose
-					and REQUIRE_CHILDREN_STRING_VERBOSE
-					or REQUIRE_CHILDREN_STRING
-				local requireObjString = make_verbose
-					and REQUIRE_OBJECT_STRING_VERBOSE
-					or REQUIRE_OBJECT_STRING
-				local childStringLen = #childString
-
-				local mainStatList = {}
-				local containerMap = {}
-
-				if topStatLen + childStringLen + #objName + 9 > 199999 then -- This might read 199,998 characters as 199,999 but that's ok
-					pluginWarn(
-						"warning: serializing large model"
+		local src = table.concat(topStats, "\n")
+		if make_verbose then
+			src = src .. "\n"
+			for i, v in ipairs(statLists) do
+				local thing = actualDescendants[i]
+				local parent = thing.Parent
+				local name = nameList[thing]
+				src = src .. "\n"
+				src = src .. table.concat(v, "\n")
+				src = src
+					.. "\n"
+					.. string.format(
+						propertyString,
+						name,
+						"Parent",
+						nameList[parent]
 					)
-				end
+					.. "\n"
+			end
+			src = src .. "\n"
 
-				local objContainer = Instance.new("ModuleScript")
-				containerMap[obj] = objContainer
-
-				objContainer.Name = objName
-				objContainer.Source = table.concat(topStats, "\n")
-					.. string.format(childString, objName)
-					.. "\nreturn "
-					.. objName
-
-				for i, v in ipairs(actualDescendants) do
-					local name = nameList[v]
-
-					if lenList[i] + childStringLen + #name + 9 > 199999 then
-						pluginWarn(
-							"warning: serializing large model"
-						)
-					end
-
-					local container = Instance.new("ModuleScript")
-					containerMap[v] = container
-
-					container.Parent = containerMap[v.Parent]
-					container.Name = name
-					container.Source = table.concat(statLists[i], "\n")
-						.. string.format(childString, name)
-						.. "\nreturn "
-						.. name
-				end
-
-				local statC = 1
-
-				if #topRefs ~= 0 then
-					mainStatList[statC] = string.format(
-						requireObjString,
-						objName,
-						"script." .. objContainer:GetFullName()
-					)
-					for l, k in ipairs(topRefs) do
-						local propName, propValue = k[1], k[2]
-						local valueStat = ""
-						if propValue == obj then
-							valueStat = objName
-						elseif obj:IsAncestorOf(propValue) or propValue == obj then
-							valueStat = "require(script."
-								.. containerMap[propValue]:GetFullName()
-								.. ")"
-						else
-							valueStat = makeFullName(propValue)
-						end
-						mainStatList[statC + l] = string.format(
+			for i, v in ipairs(refLists) do
+				local name = nameList[actualDescendants[i]]
+				for _, k in ipairs(v) do
+					local propName, propValue = k[1], k[2]
+					src = src
+						.. string.format(
 							propertyString,
-							objName,
+							name,
 							propName,
-							valueStat
+							nameList[propValue] or makeFullName(propValue)
 						)
-					end
-					statC = statC + #topRefs + 1
+						.. "\n"
 				end
-				if parent_highest_ancestor then
-					mainStatList[statC] = string.format(
+				if #v ~= 0 then
+					src = src .. "\n"
+				end
+			end
+
+			for _, v in ipairs(topRefs) do
+				local propName, propValue = v[1], v[2]
+				src = src
+					.. string.format(
 						propertyString,
 						objName,
-						"Parent",
-						topParent
+						propName,
+						nameList[propValue] or makeFullName(propValue)
 					)
-					statC = statC + 1
-				end
+					.. "\n"
+			end
 
-				for i, v in ipairs(actualDescendants) do -- We want to make sure all of the containers exist first
-					local name = nameList[v]
-					local container = containerMap[v]
-					local refs = refLists[i]
-					if #refs ~= 0 then
-						mainStatList[statC] = string.format(
-							requireObjString,
-							name,
-							"script." .. container:GetFullName()
-						)
-						for l, k in ipairs(refs) do
-							local propName, propValue = k[1], k[2]
-							local valueStat = ""
-							if propValue == v then
-								valueStat = name
-							elseif
-								obj:IsAncestorOf(propValue)
-								or propValue == obj
-							then
-								valueStat = "require(script."
-									.. containerMap[propValue]:GetFullName()
-									.. ")"
-							else
-								valueStat = makeFullName(propValue)
-							end
-							mainStatList[statC + l] = string.format(
-								propertyString,
-								name,
-								propName,
-								valueStat
-							)
-						end
-						statC = statC + #refs + 1
-					end
-				end
-
-				local mainStatLen = #mainStatList - 1
-				for _, v in ipairs(mainStatList) do
-					mainStatLen = mainStatLen + #v
-				end
-				if mainStatLen > 199999 then
-					pluginWarn(
-						"warning: serializing large model"
-					)
-				end
-
-				Return..=table.concat(mainStatList, "\n")
-			else
-				pluginWarn(
-					"warning: serializing large model"
-				)
+			if make_module then
+				src = src .. "\nreturn " .. objName
 			end
 		else
-			local src = table.concat(topStats, "\n")
-			if make_verbose then
+			for i, v in ipairs(statLists) do
+				local thing = actualDescendants[i]
+				local parent = thing.Parent
+				local name = nameList[thing]
 				src = src .. "\n"
-				for i, v in ipairs(statLists) do
-					local thing = actualDescendants[i]
-					local parent = thing.Parent
-					local name = nameList[thing]
-					src = src .. "\n"
-					src = src .. table.concat(v, "\n")
+				src = src .. table.concat(v, "\n")
+				src = src
+					.. "\n"
+					.. string.format(
+						propertyString,
+						name,
+						"Parent",
+						nameList[parent]
+					)
+			end
+			src = src .. "\n"
+
+			for i, v in ipairs(refLists) do
+				local name = nameList[actualDescendants[i]]
+				for _, k in ipairs(v) do
+					local propName, propValue = k[1], k[2]
 					src = src
-						.. "\n"
 						.. string.format(
 							propertyString,
 							name,
-							"Parent",
-							nameList[parent]
-						)
-						.. "\n"
-				end
-				src = src .. "\n"
-
-				for i, v in ipairs(refLists) do
-					local name = nameList[actualDescendants[i]]
-					for _, k in ipairs(v) do
-						local propName, propValue = k[1], k[2]
-						src = src
-							.. string.format(
-								propertyString,
-								name,
-								propName,
-								nameList[propValue] or makeFullName(propValue)
-							)
-							.. "\n"
-					end
-					if #v ~= 0 then
-						src = src .. "\n"
-					end
-				end
-
-				for _, v in ipairs(topRefs) do
-					local propName, propValue = v[1], v[2]
-					src = src
-						.. string.format(
-							propertyString,
-							objName,
 							propName,
 							nameList[propValue] or makeFullName(propValue)
 						)
 						.. "\n"
-				end
-
-				if parent_highest_ancestor then
-					src = src
-						.. string.format(
-							propertyString,
-							objName,
-							"Parent",
-							topParent
-						)
-				end
-
-				if make_module then
-					src = src .. "\nreturn " .. objName
-				end
-			else
-				for i, v in ipairs(statLists) do
-					local thing = actualDescendants[i]
-					local parent = thing.Parent
-					local name = nameList[thing]
-					src = src .. "\n"
-					src = src .. table.concat(v, "\n")
-					src = src
-						.. "\n"
-						.. string.format(
-							propertyString,
-							name,
-							"Parent",
-							nameList[parent]
-						)
-				end
-				src = src .. "\n"
-
-				for i, v in ipairs(refLists) do
-					local name = nameList[actualDescendants[i]]
-					for _, k in ipairs(v) do
-						local propName, propValue = k[1], k[2]
-						src = src
-							.. string.format(
-								propertyString,
-								name,
-								propName,
-								nameList[propValue] or makeFullName(propValue)
-							)
-							.. "\n"
-					end
-				end
-
-				for _, v in ipairs(topRefs) do
-					local propName, propValue = v[1], v[2]
-					src = src
-						.. string.format(
-							propertyString,
-							objName,
-							propName,
-							nameList[propValue] or makeFullName(propValue)
-						)
-						.. "\n"
-				end
-
-				if parent_highest_ancestor then
-					src = src
-						.. string.format(
-							propertyString,
-							objName,
-							"Parent",
-							topParent
-						)
-				end
-
-				if make_module then
-					src = src .. "\nreturn " .. objName
 				end
 			end
-			Return..=src
+
+			for _, v in ipairs(topRefs) do
+				local propName, propValue = v[1], v[2]
+				src = src
+					.. string.format(
+						propertyString,
+						objName,
+						propName,
+						nameList[propValue] or makeFullName(propValue)
+					)
+					.. "\n"
+			end
+
+			if make_module then
+				src = src .. "\nreturn " .. objName
+			end
 		end
+
+		Return..=src
 		Return..=" "
 	end
-	return Return:gsub("\n", " ")
+	if return_highest_ancestor then
+		Return..=(" return "..topParent)
+	end
+	return Return:gsub("\n", " "):gsub("local ", "")
 end
 
 
@@ -3069,23 +2923,23 @@ end
 
 -- F3X Export
 function F3XExport(TableOfParts)
-    local HttpService=game:GetService"HttpService"
-    local SerializedBuildData = Serialization.SerializeModel(TableOfParts);
-	
-    local Response = HttpService:JSONDecode(
-    	(Request or syn.request){
-    		Url = 'http://f3xteam.com/bt/export',
-    		Method = "POST",
-            Headers = {
-                ["Content-Type"] = "application/json"
-            },
-    		Body = HttpService:JSONEncode { data = SerializedBuildData, version = 3, userId = math.random(1,1000000) }
-    	}
-    );
-    if Response then
-        pcall(function()setclipboard(tostring(Response.id))end)
-        return Response.id
-    end
+	local HttpService=game:GetService"HttpService"
+	local SerializedBuildData = Serialization.SerializeModel(TableOfParts);
+
+	local Response = HttpService:JSONDecode(
+		(Request or syn.request){
+			Url = 'http://f3xteam.com/bt/export',
+			Method = "POST",
+			Headers = {
+				["Content-Type"] = "application/json"
+			},
+			Body = HttpService:JSONEncode { data = SerializedBuildData, version = 3, userId = math.random(1,1000000) }
+		}
+	);
+	if Response then
+		pcall(function()setclipboard(tostring(Response.id))end)
+		return Response.id
+	end
 end
 -------------
 
