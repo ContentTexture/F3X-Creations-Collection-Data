@@ -2879,7 +2879,7 @@ do
 		end;
 
 		-- Create a container to hold the creation
-		local Container = Instance.new( 'Model', Workspace );
+		local Container = Instance.new'Model';
 		Container.Name = 'BTExport';
 
 		-- Inflate legacy v1 export data
