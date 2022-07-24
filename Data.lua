@@ -1773,10 +1773,10 @@ if ReadFile and not _G.apiJson then
 end
 
 function getAPI()
-	local X = not _G.apiJson and((ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua")
+	local X = not _G.apiJson and(ReadFile and ReadFile"APIJson.lua" and ReadFile"APIJson.lua")
 	local Updated
 	if not X then
-		X=Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
+		X=Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"}
 		Updated=true
 	end
 	_G.apiJson = _G.apiJson or loadstring(X)()
