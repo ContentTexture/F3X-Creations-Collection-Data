@@ -1787,7 +1787,7 @@ function getAPI()
 	warn"Loaded API dump"
 	if not Updated then
 		coroutine.wrap(function()
-			X=Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"})
+			X=Request{Url = "https://raw.githubusercontent.com/ContentTexture/F3X-Creations-Collection-Data/main/APIJson.lua", Method = "GET"}
 			pcall(function()
 				WriteFile("APIJson.lua", X)
 			end)
