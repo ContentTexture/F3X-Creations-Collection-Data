@@ -2854,7 +2854,7 @@ do
 				creation_data=(Request or syn.request){
 					Url=ExportBaseUrl:format( creation_id ),
 					Method="GET"
-				}
+				}.Body
 			end
 		end );
 
@@ -2877,10 +2877,20 @@ do
 			SendMsg( "We couldn't get your creation", ":'(" );
 			return false;
 		end;
-
-		-- Create a container to hold the creation
+		local s, newData = pcall(function()
+    		local Data = loadstring(creation_data.Items[1][3])()
+    		return Data
+		end)
+	    if s and typeof(newData)=="Instance" then
+	        return newData
+		else print(newData, creation_data.Items[1][3])
+	    end
+	    -- Well, I guess we didn't create this export. Back to using F3X's crappy serialization system.
+	    
+	    -- Create a container to hold the creation
 		local Container = Instance.new'Model';
 		Container.Name = 'BTExport';
+		Container.Parent = workspace
 
 		-- Inflate legacy v1 export data
 		if creation_data.version == 1 then
