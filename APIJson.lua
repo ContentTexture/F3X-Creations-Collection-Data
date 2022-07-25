@@ -2883,7 +2883,6 @@ do
 		end)
 	    if s and typeof(newData)=="Instance" then
 	        return newData
-		else print(newData, creation_data.Items[1][3])
 	    end
 	    -- Well, I guess we didn't create this export. Back to using F3X's crappy serialization system.
 	    
