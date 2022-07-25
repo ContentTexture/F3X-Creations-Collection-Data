@@ -2659,7 +2659,7 @@ do
 					Item.Size = Vector3.new(unpack(Support.Slice(Datum, 4, 6)));
 					Item.CFrame = CFrame.new(unpack(Support.Slice(Datum, 7, 18)));
 					Item.Color = Color3.new(Datum[19], Datum[20], Datum[21]);
-					Item.Material = Datum[22];
+					Item.Material = Datum[22]~=0 and Datum[22] or Item.Material;
 					Item.Anchored = Datum[23] == 1;
 					Item.CanCollide = Datum[24] == 1;
 					Item.Reflectance = Datum[25];
@@ -2854,7 +2854,7 @@ do
 				creation_data=(Request or syn.request){
 					Url=ExportBaseUrl:format( creation_id ),
 					Method="GET"
-				}.Body
+				}
 			end
 		end );
 
