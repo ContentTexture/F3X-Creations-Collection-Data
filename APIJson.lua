@@ -934,7 +934,760 @@ function serialize(obj)
 end
 
 
--- F3X Import
+-- Exporting and importing to f3x servers
+
+-- Exporting and importing to f3x servers
+
+local HttpService=game:GetService"HttpService"
+
+-- Simple serializer
+Serializer = {}
+
+Serializer.Classes = {
+	["a"]="Part",
+	["b"]="WedgePart",
+	["c"]="TrussPart",
+	["d"]="Seat",
+	["e"]="VehicleSeat",
+	["f"]="MeshPart",
+	["g"]="RigidConstraint",
+	["h"]="HingeConstraint",
+	["i"]="Attachment",
+	["j"]="Decal",
+	["k"]="Texture",
+	["l"]="SpecialMesh",
+	["m"]="Camera",
+	["n"]="Beam",
+	["o"]="Model",
+	["p"]="Sound",
+	["q"]="BodyColors",
+	["r"]="Shirt",
+	["s"]="Pants",
+	["t"]="HumanoidDescription",
+	["u"]="Humanoid",
+	["v"]="VectorForce",
+	["w"]="Motor6D",
+	["x"]="Animation",
+	["y"]="CharacterMesh"
+}
+
+Serializer.SuperClassProperties = {
+	{
+		{"a","b","c","d","e","f"},
+		{
+			"Color",
+			"Material",
+			"Transparency",
+			"Size",
+			"CFrame",
+			"Anchored",
+			["BackSurface"] = {"a", "b", "c", "d", "e"},
+			["BottomSurface"] = {"a", "b", "c", "d", "e"},
+			["FrontSurface"] = {"a", "b", "c", "d", "e"},
+			["LeftSurface"] = {"a", "b", "c", "d", "e"},
+			["RightSurface"] = {"a", "b", "c", "d", "e"},
+			["TopSurface"] = {"a", "b", "c", "d", "e"},
+			["Shape"] = {"a"},
+			["TextureID"] = {"f"},
+			["MeshId"] = {"f"}
+		}
+	},
+	{
+		{"g", "h", "n"},
+		{
+			"Attachment0",
+			"Attachment1",
+			["Color"] = {"n"},
+			["LightEmission"] = {"n"},
+			["LightInfluence"] = {"n"},
+			["Texture"] = {"n"},
+			["TextureLength"] = {"n"},
+			["TextureMode"] = {"n"},
+			["TextureSpeed"] = {"n"},
+			["Transparency"] = {"n"},
+			["CurveSize0"] = {"n"},
+			["CurveSize1"] = {"n"},
+			["FaceCamera"] = {"n"},
+			["Segments"] = {"n"},
+			["Width0"] = {"n"},
+			["Width1"] = {"n"}
+		}
+	},
+	{
+		{"i"},
+		{
+			"CFrame"
+		}
+	},
+	{
+		{"j","k"},
+		{
+			"Color3",
+			"Texture",
+			"Transparency",
+			"ZIndex"
+		}
+	},
+	{
+		{"l"},
+		{
+			"MeshId",
+			"MeshType",
+			"Offset",
+			"Scale",
+			"VertexColor"
+		}
+	},
+	{
+		{"m"},
+		{
+			"CameraType",
+			"DiagonalFieldOfView",
+			"FieldOfView",
+			"FieldOfViewMode",
+			"MaxAxisFieldOfView",
+			"CFrame"
+		}
+	},
+	{
+		{"o"},
+		{
+			"LevelOfDetail",
+			"PrimaryPart"
+		}
+	},
+	{
+		{"p"},
+		{
+			"Looped",
+			"PlaybackSpeed",
+			"RollOffMaxDistance",
+			"RollOffMinDistance",
+			"RollOffMode",
+			"SoundGroup",
+			"SoundId",
+			"TimePosition",
+			"Volume",
+			"PlayOnRemove"
+		}
+	},
+	{
+		{"q"},
+		{
+			"HeadColor3",
+			"LeftArmColor3",
+			"LeftLegColor3",
+			"RightArmColor3",
+			"RightLegColor3",
+			"TorsoColor3",
+		}
+	},
+	{
+		{"r"},
+		{
+			"Color3",
+			"ShirtTemplate",
+		}
+	},
+	{
+		{"s"},
+		{
+			"Color3",
+			"PantsTemplate",
+		}
+	},
+	{
+		{"t"},
+		{
+			"HeadColor",
+			"LeftArmColor",
+			"LeftLegColor",
+			"RightArmColor",
+			"RightLegColor",
+			"TorsoColor",
+		} -- when are humanoid descriptions ever used, lol.
+	},
+	{
+		{"u"},
+		{
+			"Jump",
+			"PlatformStand",
+			"Sit",
+			"TargetPoint",
+			"WalkToPart",
+			"WalkToPoint",
+			"AutomaticScalingEnabled",
+			"Health",
+			"HipHeight",
+			"MaxHealth",
+			"MaxSlopeAngle",
+			"WalkSpeed",
+			"AutoJumpEnabled",
+			"JumpPower",
+			"UseJumpPower"
+		}
+	},
+	{
+		{"v"},
+		{
+			"Color",
+			"Visible",
+			"Enabled",
+			"Attachment0",
+			"ApplyAtCenterOfMass",
+			"Force",
+			"RelativeTo"
+		}
+	},
+	{
+		{"w"},
+		{
+			"CurrentAngle",
+			"DesiredAngle",
+			"MaxVelocity",
+			"Part0",
+			"Part1",
+			"Enabled",
+			"C0",
+			"C1"
+		}
+	},
+	{
+		{"x"},
+		{
+			"AnimationId",
+		}
+	},
+	{
+		{"y"},
+		{
+			"BaseTextureId",
+			"BodyPart",
+			"MeshId",
+			"OverlayTextureId",
+		}
+	},
+
+	
+	{
+		{"wa"},
+		{}
+	}
+}
+
+function GetClass(ClassName)
+	for Class, className in pairs(Serializer.Classes) do
+		if className==ClassName or Class==ClassName then
+			return #ClassName>2 and Class or className
+		end
+	end
+end
+function GetSuperClass(Class)
+	if #Class>2 then Class = GetClass(Class) or Class end
+	for _, SuperClass in pairs(Serializer.SuperClassProperties) do
+		for _, class in pairs(SuperClass[1]) do
+			if class == Class then
+				if not table.find(SuperClass[2], "Name") then
+					table.insert(SuperClass[2], "Name")
+				end
+				return SuperClass
+			end
+		end
+	end
+	--warn("Couldn't find superclass for classname '"..Class.."'")
+	return GetSuperClass"wa"
+end
+function GetClassProperties(ClassName)
+	local SuperClass = GetSuperClass(ClassName)
+	local Class = #ClassName>2 and GetClass(ClassName) or ClassName
+
+	if SuperClass then
+		local Properties = {}
+		for _, Property in pairs(SuperClass[2]) do
+			local classes
+			if typeof(Property)=="table" then
+				Property, classes = _, Property
+			end
+			
+			if not classes or table.find(classes, Class) then
+				table.insert(Properties, Property)
+			end
+		end
+		
+		table.insert(Properties, Class)
+		return Properties
+	end
+end
+
+function SerializeObject(Object, SpecialPropertiesTable)
+	local Properties = GetClassProperties(Object.ClassName)
+	local ObjectId = Object:GetAttribute"SerializerId9128"or math.random(1,999999999)
+	
+	local SerializedObject = {{}, {}, ObjectId}
+	Object:SetAttribute("SerializerId9128", ObjectId)
+	if Properties then
+		local x=table.clone(Properties)
+		table.remove(x, #x)
+		for _, Property in pairs(x) do
+			local actualProperty
+			local Success, Error = pcall(function()
+				actualProperty = Object[Property]
+			end)
+			if not Success then
+				warn("Failed to serialize property '"..Property.."' for class '"..Object.ClassName.."': "..Error)
+			else
+				if typeof(actualProperty)=="Instance" then
+					actualProperty = actualProperty:GetAttribute"SerializerId9128"
+				end
+				actualProperty=actualProperty==nil and ""or actualProperty
+				table.insert(SerializedObject[1], actualProperty)
+			end
+		end
+		table.insert(SerializedObject[1], GetClass(Properties[#Properties]) and Properties[#Properties] or Object.ClassName)
+	else
+		warn("Couldn't find properties for classname '"..Object.ClassName.."'")
+	end
+	for _, ChildObject in pairs(Object:GetChildren()) do
+		table.insert(SerializedObject[2], SerializeObject(ChildObject, SpecialPropertiesTable))
+	end
+	return SerializedObject
+end
+
+function Serializer.Serialize(TableOfObjects)
+	TableOfObjects=typeof(TableOfObjects)=="table"and TableOfObjects or {TableOfObjects}
+	local Result = {}
+	
+	for _, Object in pairs(TableOfObjects) do
+		Object:SetAttribute("SerializerId9128", math.random(1,999999999))
+	end
+	
+	local SpecialPropertiesTable = {}
+	for _, Object in pairs(TableOfObjects) do
+		table.insert(Result, SerializeObject(Object, SpecialPropertiesTable))
+	end
+	
+	-- Clear up the attributes
+	for _, Object in pairs(TableOfObjects) do
+		Object:SetAttribute("SerializerId9128", nil)
+	end
+	
+	return Result
+end
+
+function DeserializeObject(ObjectTable, ResultTable, isChild)
+	ObjectTable=table.clone(ObjectTable)
+	local ClassName = GetClass(ObjectTable[1][#ObjectTable[1]]) or #ObjectTable[1][#ObjectTable[1]]>2 and ObjectTable[1][#ObjectTable[1]]
+	table.remove(ObjectTable[1], #ObjectTable[1])
+	
+	if ClassName and #ClassName>2 then
+		local Object
+		local Success, Error = pcall(function()
+			Object = Instance.new(ClassName)
+		end)
+		if not Success then
+			warn("Failed to create classname '"..ClassName.."'")
+			Object = Instance.new"WorldModel"
+		end
+		local Properties = GetClassProperties(ClassName)
+		if Properties then
+			table.remove(Properties, #Properties)
+			
+			for _, Property in pairs(ObjectTable[1]) do
+				local PropertyName = Properties[_]
+				local Success = pcall(function()
+					Object[PropertyName]=Object[PropertyName]
+				end)
+				if Success and typeof(Object[PropertyName])~="nil" and typeof(Object[PropertyName])~="Instance"then
+					local Success, Error = pcall(function()
+						Object[PropertyName] = Property
+					end)
+					if not Success then
+						warn("Failed to set property '"..PropertyName.."' for classname '"..ClassName.."': "..Error)
+					end
+				end
+			end
+		end
+		
+		Object:SetAttribute("SerializerId9128", ObjectTable[3])
+		if not isChild then
+			table.insert(ResultTable, Object)
+		else
+			Object.Parent = isChild
+		end
+		for _, Child in pairs(ObjectTable[2]) do
+			DeserializeObject(Child, ResultTable, Object)
+		end
+		return Object
+	end
+end
+
+function ConnectObjectProperties(Result, Objects)
+	local newResult = {}
+	local allObjects = {}
+	local function lookForChildren(Table)
+		for _, ChildTable in pairs(Table or Result) do
+			if typeof(ChildTable)=="table" then
+				table.insert(newResult, ChildTable)
+				lookForChildren(ChildTable[2])
+			end
+		end
+	end
+	lookForChildren()
+	Result=newResult
+	for _, object in pairs(Objects) do
+		table.insert(allObjects, object)
+		for _, descendant in pairs(object:GetDescendants()) do
+			table.insert(allObjects, descendant)
+		end
+	end
+	
+	for _, Object in pairs(allObjects) do
+		local Properties = GetClassProperties(Object.ClassName)
+		local ID = Object:GetAttribute"SerializerId9128"
+		
+		table.remove(Properties, #Properties)
+		for _, PropertyName in pairs(Properties) do
+			if typeof(Object[PropertyName])=="nil" or typeof(Object[PropertyName])=="Instance" then
+				local SerializedObject
+				
+				for _, serializedObject in pairs(newResult) do
+					if serializedObject[3]==ID then
+						SerializedObject = serializedObject
+					end
+				end
+				local connectedObjectID = SerializedObject[1][_]
+				
+				for _, connectedObject in pairs(allObjects) do
+					if connectedObject:GetAttribute"SerializerId9128"==connectedObjectID then
+						Object[PropertyName]=connectedObject
+					end
+				end
+			end
+		end
+	end
+end
+
+function Serializer.Deserialize(Result)
+	local Objects = {}
+	for _, SerializedObject in pairs(Result) do
+		if typeof(SerializedObject)=="table" then
+			table.insert(Objects, DeserializeObject(SerializedObject, Result) or Instance.new"StringValue")
+		else
+			table.remove(Result, _)
+		end
+	end
+	
+	ConnectObjectProperties(Result, Objects)
+	
+	return Objects
+end
+
+if not toStringFunc then
+	local defaultSettings = {
+		pretty = false;
+		robloxFullName = true;
+		robloxProperFullName = true;
+		robloxClassName = true;
+		tabs = true;
+		semicolons = true;
+		spaces = 3;
+		sortKeys = true;
+	}
+
+	-- lua keywords
+	local keywords = {["and"]=true, ["break"]=true, ["do"]=true, ["else"]=true,
+		["elseif"]=true, ["end"]=true, ["false"]=true, ["for"]=true, ["function"]=true,
+		["if"]=true, ["in"]=true, ["local"]=true, ["nil"]=true, ["not"]=true, ["or"]=true,
+		["repeat"]=true, ["return"]=true, ["then"]=true, ["true"]=true, ["until"]=true, ["while"]=true}
+
+	local function isLuaIdentifier(str)
+		if type(str) ~= "string" then return false end
+		-- must be nonempty
+		if str:len() == 0 then return false end
+		-- can only contain a-z, A-Z, 0-9 and underscore
+		if str:find("[^%s%a_]") then return false end
+		-- cannot begin with digit
+		if tonumber(str:sub(1, 1)) then return false end
+		-- cannot be keyword
+		if keywords[str] then return false end
+		return true
+	end
+
+	-- works like Instance:GetFullName(), but invalid Lua identifiers are fixed (e.g. workspace["The Dude"].Humanoid)
+	local function properFullName(object, usePeriod)
+		if object == nil or object == game then return "" end
+
+		local s = object.Name
+		local usePeriod = true
+		if not isLuaIdentifier(s) then
+			s = ("[%q]"):format(s)
+			usePeriod = false
+		end
+
+		if not object.Parent or object.Parent == game then
+			return s
+		else
+			return properFullName(object.Parent) .. (usePeriod and "." or "") .. s 
+		end
+	end
+
+	local depth = 0
+	local shown
+	local INDENT
+	local reprSettings
+
+	function toStringFunc(value, reprSettings)
+		reprSettings = reprSettings or defaultSettings
+		INDENT = (" "):rep(reprSettings.spaces or defaultSettings.spaces)
+		if reprSettings.tabs then
+			INDENT = "\t"
+		end
+
+		local v = value --args[1]
+		local tabs = INDENT:rep(depth)
+
+		if depth == 0 then
+			shown = {}
+		end
+		if type(v) == "string" then
+			return ("%q"):format(v)
+		elseif type(v) == "number" then
+			if v == math.huge then return "math.huge" end
+			if v == -math.huge then return "-math.huge" end
+			return tonumber(v)
+		elseif type(v) == "boolean" then
+			return tostring(v)
+		elseif type(v) == "nil" then
+			return "nil"
+		elseif type(v) == "table" and type(v.__tostring) == "function" then
+			return tostring(v.__tostring(v))
+		elseif type(v) == "table" and getmetatable(v) and type(getmetatable(v).__tostring) == "function" then
+			return tostring(getmetatable(v).__tostring(v))
+		elseif type(v) == "table" then
+			if shown[v] then return "{CYCLIC}" end
+			shown[v] = true
+			local str = "{" .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or "")
+			local isArray = true
+			for k, v in pairs(v) do
+				if type(k) ~= "number" then
+					isArray = false
+					break
+				end
+			end
+			if isArray then
+				for i = 1, #v do
+					if i ~= 1 then
+						str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+					end
+					depth = depth + 1
+					str = str .. toStringFunc(v[i], reprSettings)
+					depth = depth - 1
+				end
+			else
+				local keyOrder = {}
+				local keyValueStrings = {}
+				for k, v in pairs(v) do
+					depth = depth + 1
+					local kStr = isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]")
+					local vStr = toStringFunc(v, reprSettings)
+					--[[str = str .. ("%s = %s"):format(
+						isLuaIdentifier(k) and k or ("[" .. toStringFunc(k, reprSettings) .. "]"),
+						toStringFunc(v, reprSettings)
+					)]]
+					table.insert(keyOrder, kStr)
+					keyValueStrings[kStr] = vStr
+					depth = depth - 1
+				end
+				if reprSettings.sortKeys then table.sort(keyOrder) end
+				local first = true
+				for _, kStr in pairs(keyOrder) do
+					if not first then
+						str = str .. (reprSettings.semicolons and ";" or ",") .. (reprSettings.pretty and ("\n" .. INDENT .. tabs) or " ")
+					end
+					str = str .. ("%s = %s"):format(kStr, keyValueStrings[kStr])
+					first = false
+				end
+			end
+			shown[v] = false
+			if reprSettings.pretty then
+				str = str .. "\n" .. tabs
+			end
+			str = str .. "}"
+			return str
+		elseif typeof then
+			-- Check Roblox types
+			if typeof(v) == "Instance" then
+				return  (reprSettings.robloxFullName
+					and (reprSettings.robloxProperFullName and properFullName(v) or v:GetFullName())
+					or v.Name) .. (reprSettings.robloxClassName and ((" (%s)"):format(v.ClassName)) or "")
+			elseif typeof(v) == "Axes" then
+				local s = {}
+				if v.X then table.insert(s, toStringFunc(Enum.Axis.X, reprSettings)) end
+				if v.Y then table.insert(s, toStringFunc(Enum.Axis.Y, reprSettings)) end
+				if v.Z then table.insert(s, toStringFunc(Enum.Axis.Z, reprSettings)) end
+				return ("Axes.new(%s)"):format(table.concat(s, ", "))
+			elseif typeof(v) == "BrickColor" then
+				return ("BrickColor.new(%q)"):format(v.Name)
+			elseif typeof(v) == "CFrame" then
+				return ("CFrame.new(%s)"):format(table.concat({v:GetComponents()}, ", "))
+			elseif typeof(v) == "Color3" then
+				return ("Color3.new(%s, %s, %s)"):format(v.R, v.G, v.B)
+			elseif typeof(v) == "ColorSequence" then
+				if #v.Keypoints > 2 then
+					return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
+				else
+					if v.Keypoints[1].Value == v.Keypoints[2].Value then
+						return ("ColorSequence.new(%s)"):format(toStringFunc(v.Keypoints[1].Value, reprSettings))
+					else
+						return ("ColorSequence.new(%s, %s)"):format(
+						toStringFunc(v.Keypoints[1].Value, reprSettings),
+						toStringFunc(v.Keypoints[2].Value, reprSettings)
+						)
+					end
+				end
+			elseif typeof(v) == "ColorSequenceKeypoint" then
+				return ("ColorSequenceKeypoint.new(%s, %s)"):format(v.Time, toStringFunc(v.Value, reprSettings))
+			elseif typeof(v) == "DockWidgetPluginGuiInfo" then
+				return ("DockWidgetPluginGuiInfo.new(%s, %s, %s, %s, %s, %s, %s)"):format(
+				toStringFunc(v.InitialDockState, reprSettings),
+				toStringFunc(v.InitialEnabled, reprSettings),
+				toStringFunc(v.InitialEnabledShouldOverrideRestore, reprSettings),
+				toStringFunc(v.FloatingXSize, reprSettings),
+				toStringFunc(v.FloatingYSize, reprSettings),
+				toStringFunc(v.MinWidth, reprSettings),
+				toStringFunc(v.MinHeight, reprSettings)
+				)
+			elseif typeof(v) == "Enums" then
+				return "Enums"
+			elseif typeof(v) == "Enum" then
+				return ("Enum.%s"):format(tostring(v))
+			elseif typeof(v) == "EnumItem" then
+				return ("Enum.%s.%s"):format(tostring(v.EnumType), v.Name)
+			elseif typeof(v) == "Faces" then
+				local s = {}
+				for _, enumItem in pairs(Enum.NormalId:GetEnumItems()) do
+					if v[enumItem.Name] then
+						table.insert(s, toStringFunc(enumItem, reprSettings))
+					end
+				end
+				return ("Faces.new(%s)"):format(table.concat(s, ", "))
+			elseif typeof(v) == "NumberRange" then
+				if v.Min == v.Max then
+					return ("NumberRange.new(%s)"):format(v.Min)
+				else
+					return ("NumberRange.new(%s, %s)"):format(v.Min, v.Max)
+				end
+			elseif typeof(v) == "NumberSequence" then
+				if #v.Keypoints > 2 then
+					return ("NumberSequence.new(%s)"):format(toStringFunc(v.Keypoints, reprSettings))
+				else
+					if v.Keypoints[1].Value == v.Keypoints[2].Value then
+						return ("NumberSequence.new(%s)"):format(v.Keypoints[1].Value)
+					else
+						return ("NumberSequence.new(%s, %s)"):format(v.Keypoints[1].Value, v.Keypoints[2].Value)
+					end
+				end
+			elseif typeof(v) == "NumberSequenceKeypoint" then
+				if v.Envelope ~= 0 then
+					return ("NumberSequenceKeypoint.new(%s, %s, %s)"):format(v.Time, v.Value, v.Envelope)
+				else
+					return ("NumberSequenceKeypoint.new(%s, %s)"):format(v.Time, v.Value)
+				end
+			elseif typeof(v) == "PathWaypoint" then
+				return ("PathWaypoint.new(%s, %s)"):format(
+				toStringFunc(v.Position, reprSettings),
+				toStringFunc(v.Action, reprSettings)
+				)
+			elseif typeof(v) == "PhysicalProperties" then
+				return ("PhysicalProperties.new(%s, %s, %s, %s, %s)"):format(
+				v.Density, v.Friction, v.Elasticity, v.FrictionWeight, v.ElasticityWeight
+				)
+			elseif typeof(v) == "Random" then
+				return "<Random>"
+			elseif typeof(v) == "Ray" then
+				return ("Ray.new(%s, %s)"):format(
+				toStringFunc(v.Origin, reprSettings),
+				toStringFunc(v.Direction, reprSettings)
+				)
+			elseif typeof(v) == "RBXScriptConnection" then
+				return "<RBXScriptConnection>"
+			elseif typeof(v) == "RBXScriptSignal" then
+				return "<RBXScriptSignal>"
+			elseif typeof(v) == "Rect" then
+				return ("Rect.new(%s, %s, %s, %s)"):format(
+				v.Min.X, v.Min.Y, v.Max.X, v.Max.Y
+				)
+			elseif typeof(v) == "Region3" then
+				local min = v.CFrame.p + v.Size * -.5
+				local max = v.CFrame.p + v.Size * .5
+				return ("Region3.new(%s, %s)"):format(
+				toStringFunc(min, reprSettings),
+				toStringFunc(max, reprSettings)
+				)
+			elseif typeof(v) == "Region3int16" then
+				return ("Region3int16.new(%s, %s)"):format(
+				toStringFunc(v.Min, reprSettings),
+				toStringFunc(v.Max, reprSettings)
+				)
+			elseif typeof(v) == "TweenInfo" then
+				return ("TweenInfo.new(%s, %s, %s, %s, %s, %s)"):format(
+				v.Time, toStringFunc(v.EasingStyle, reprSettings), toStringFunc(v.EasingDirection, reprSettings),
+				v.RepeatCount, toStringFunc(v.Reverses, reprSettings), v.DelayTime
+				)
+			elseif typeof(v) == "UDim" then
+				return ("UDim.new(%s, %s)"):format(
+				v.Scale, v.Offset
+				)
+			elseif typeof(v) == "UDim2" then
+				return ("UDim2.new(%s, %s, %s, %s)"):format(
+				v.X.Scale, v.X.Offset, v.Y.Scale, v.Y.Offset
+				)
+			elseif typeof(v) == "Vector2" then
+				return ("Vector2.new(%s, %s)"):format(v.X, v.Y)
+			elseif typeof(v) == "Vector2int16" then
+				return ("Vector2int16.new(%s, %s)"):format(v.X, v.Y)
+			elseif typeof(v) == "Vector3" then
+				return ("Vector3.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+			elseif typeof(v) == "Vector3int16" then
+				return ("Vector3int16.new(%s, %s, %s)"):format(v.X, v.Y, v.Z)
+			elseif typeof(v) == "DateTime" then
+				return ("DateTime.fromIsoDate(%q)"):format(v:ToIsoDate())
+			else
+				return "<Roblox:" .. typeof(v) .. ">"
+			end
+		else
+			return "<" .. type(v) .. ">"
+		end
+	end
+end
+
+function F3XExport(TableOfParts)
+	local Container = Instance.new"Model"
+	Container.Name = "BTExport"..math.random(1,999999999)
+	-- F3X has strong security so the only way I managed to sneak in
+	-- data that wasn't serialized by their crappy serializer was through a string property on a serialized part
+	-- So you can basically store anything on their server with this method as long as it's a string
+	local SerializedBuildData = {Items = {{0,0,toStringFunc(Serializer.Serialize(TableOfParts)),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}, Version = 3}
+    
+    SerializedBuildData=HttpService:JSONEncode(SerializedBuildData)
+
+	local Response = HttpService:JSONDecode(
+		(Request or syn.request){
+			Url = 'http://f3xteam.com/bt/export',
+			Method = "POST",
+			Headers = {
+				["Content-Type"] = "application/json"
+			},
+			Body = HttpService:JSONEncode {data = SerializedBuildData, version = 3, userId = math.random(1,1000000) }
+		}
+	);
+	if Response then
+		return Response.id
+	end
+end
+
+-- Import
+
 do
 	ExportBaseUrl = "http://www.f3xteam.com/bt/export/%s"
 	SupportLibrary = function()SupportLibrary = {};
@@ -2843,324 +3596,7 @@ do
 	end
 	SerializationV3=SerializationV3()
 
-	HttpService=game:GetService("HttpService")
 	SendMsg=SendMsg or function(x,z)print(x,z)end
-	
-	-- Simple serializer
-Serializer = {}
-
-Serializer.Classes = {
-	["a"]="Part",
-	["b"]="WedgePart",
-	["c"]="TrussPart",
-	["d"]="Seat",
-	["e"]="VehicleSeat",
-	["f"]="MeshPart",
-	["g"]="RigidConstraint",
-	["h"]="HingeConstraint",
-	["i"]="Attachment",
-	["j"]="Decal",
-	["k"]="Texture",
-	["l"]="SpecialMesh",
-	["m"]="Camera",
-	["n"]="Beam",
-	["o"]="Model"
-}
-
-Serializer.SuperClassProperties = {
-	{
-		{"a","b","c","d","e","f"},
-		{
-			"Color",
-			"Material",
-			"Transparency",
-			"Size",
-			"CFrame",
-			"Anchored",
-			["BackSurface"] = {"a", "b", "c", "d", "e"},
-			["BottomSurface"] = {"a", "b", "c", "d", "e"},
-			["FrontSurface"] = {"a", "b", "c", "d", "e"},
-			["LeftSurface"] = {"a", "b", "c", "d", "e"},
-			["RightSurface"] = {"a", "b", "c", "d", "e"},
-			["TopSurface"] = {"a", "b", "c", "d", "e"},
-			["Shape"] = {"a"},
-			["TextureID"] = {"f"},
-			["MeshId"] = {"f"}
-		}
-	},
-	{
-		{"g", "h", "n"},
-		{
-			"Attachment0",
-			"Attachment1",
-			["Color"] = {"n"},
-			["LightEmission"] = {"n"},
-			["LightInfluence"] = {"n"},
-			["Texture"] = {"n"},
-			["TextureLength"] = {"n"},
-			["TextureMode"] = {"n"},
-			["TextureSpeed"] = {"n"},
-			["Transparency"] = {"n"},
-			["CurveSize0"] = {"n"},
-			["CurveSize1"] = {"n"},
-			["FaceCamera"] = {"n"},
-			["Segments"] = {"n"},
-			["Width0"] = {"n"},
-			["Width1"] = {"n"}
-		}
-	},
-	{
-		{"i"},
-		{
-			"CFrame"
-		}
-	},
-	{
-		{"j","k"},
-		{
-			"Color3",
-			"Texture",
-			"Transparency",
-			"ZIndex"
-		}
-	},
-	{
-		{"l"},
-		{
-			"MeshId",
-			"MeshType",
-			"Offset",
-			"Scale",
-			"VertexColor"
-		}
-	},
-	{
-		{"m"},
-		{
-			"CameraType",
-			"DiagonalFieldOfView",
-			"FieldOfView",
-			"FieldOfViewMode",
-			"MaxAxisFieldOfView",
-			"CFrame"
-		}
-	},
-	{
-		{"o"},
-		{
-			"LevelOfDetail",
-			"PrimaryPart"
-		}
-	},
-	
-	{
-		{"z"},
-		{}
-	}
-}
-
-function GetClass(ClassName)
-	for Class, className in pairs(Serializer.Classes) do
-		if className==ClassName or Class==ClassName then
-			return #ClassName>2 and Class or className
-		end
-	end
-end
-function GetSuperClass(Class)
-	if #Class>2 then Class = GetClass(Class) or Class end
-	for _, SuperClass in pairs(Serializer.SuperClassProperties) do
-		for _, class in pairs(SuperClass[1]) do
-			if class == Class then
-				if not table.find(SuperClass[2], "Name") then
-					table.insert(SuperClass[2], "Name")
-				end
-				return SuperClass
-			end
-		end
-	end
-	warn("Couldn't find superclass for classname '"..Class.."'")
-	return GetSuperClass"z"
-end
-function GetClassProperties(ClassName)
-	local SuperClass = GetSuperClass(ClassName)
-	local Class = #ClassName>2 and GetClass(ClassName) or ClassName
-
-	if SuperClass then
-		local Properties = {}
-		for _, Property in pairs(SuperClass[2]) do
-			local classes
-			if typeof(Property)=="table" then
-				Property, classes = _, Property
-			end
-			
-			if not classes or table.find(classes, Class) then
-				table.insert(Properties, Property)
-			end
-		end
-		
-		table.insert(Properties, Class)
-		return Properties
-	end
-end
-
-function SerializeObject(Object, SpecialPropertiesTable)
-	local Properties = GetClassProperties(Object.ClassName)
-	local ObjectId = Object:GetAttribute"SerializerId9128"or math.random(1,999999999)
-	
-	local SerializedObject = {{}, {}, ObjectId}
-	Object:SetAttribute("SerializerId9128", ObjectId)
-	if Properties then
-		local x=table.clone(Properties)
-		table.remove(x, #x)
-		for _, Property in pairs(x) do
-			local actualProperty
-			local Success, Error = pcall(function()
-				actualProperty = Object[Property]
-			end)
-			if not Success then
-				warn("Failed to serialize property '"..Property.."' for class '"..Object.ClassName.."': "..Error)
-			else
-				if typeof(actualProperty)=="Instance" then
-					actualProperty = actualProperty:GetAttribute"SerializerId9128"
-				end
-				table.insert(SerializedObject[1], actualProperty==nil and ""or actualProperty)
-			end
-		end
-		table.insert(SerializedObject[1], GetClass(Properties[#Properties]) and Properties[#Properties] or Object.ClassName)
-	else
-		warn("Couldn't find properties for classname '"..Object.ClassName.."'")
-	end
-	for _, ChildObject in pairs(Object:GetChildren()) do
-		table.insert(SerializedObject[2], SerializeObject(ChildObject, SpecialPropertiesTable))
-	end
-	return SerializedObject
-end
-
-function Serializer.Serialize(TableOfObjects)
-	TableOfObjects=typeof(TableOfObjects)=="table"and TableOfObjects or {TableOfObjects}
-	local Result = {}
-	
-	for _, Object in pairs(TableOfObjects) do
-		Object:SetAttribute("SerializerId9128", math.random(1,999999999))
-	end
-	
-	local SpecialPropertiesTable = {}
-	for _, Object in pairs(TableOfObjects) do
-		table.insert(Result, SerializeObject(Object, SpecialPropertiesTable))
-	end
-	
-	-- Clear up the attributes
-	for _, Object in pairs(TableOfObjects) do
-		Object:SetAttribute("SerializerId9128", nil)
-	end
-	
-	return Result
-end
-
-function DeserializeObject(ObjectTable, ResultTable, isChild)
-	ObjectTable=table.clone(ObjectTable)
-	local ClassName = GetClass(ObjectTable[1][#ObjectTable[1]]) or #ObjectTable[1][#ObjectTable[1]]>2 and ObjectTable[1][#ObjectTable[1]]
-	table.remove(ObjectTable[1], #ObjectTable[1])
-	
-	if ClassName and #ClassName>2 then
-		local Object
-		local Success, Error = pcall(function()
-			Object = Instance.new(ClassName)
-		end)
-		if not Success then
-			warn("Failed to create classname '"..ClassName.."'")
-			Object = Instance.new"WorldModel"
-		end
-		local Properties = GetClassProperties(ClassName)
-		if Properties then
-			table.remove(Properties, #Properties)
-			
-			for _, Property in pairs(ObjectTable[1]) do
-				local PropertyName = Properties[_]
-				if typeof(Object[PropertyName])~="nil" and typeof(Object[PropertyName])~="Instance"then
-					local Success, Error = pcall(function()
-						Object[PropertyName] = Property
-					end)
-					if not Success then
-						warn("Failed to set property '"..PropertyName.."' for classname '"..ClassName.."': "..Error)
-					end
-				end
-			end
-		end
-		
-		Object:SetAttribute("SerializerId9128", ObjectTable[3])
-		if not isChild then
-			table.insert(ResultTable, Object)
-		else
-			Object.Parent = isChild
-		end
-		for _, Child in pairs(ObjectTable[2]) do
-			DeserializeObject(Child, ResultTable, Object)
-		end
-		return Object
-	end
-end
-
-function ConnectObjectProperties(Result, Objects)
-	local newResult = {}
-	local allObjects = {}
-	local function lookForChildren(Table)
-		for _, ChildTable in pairs(Table or Result) do
-			if typeof(ChildTable)=="table" then
-				table.insert(newResult, ChildTable)
-				lookForChildren(ChildTable[2])
-			end
-		end
-	end
-	lookForChildren()
-	Result=newResult
-	for _, object in pairs(Objects) do
-		table.insert(allObjects, object)
-		for _, descendant in pairs(object:GetDescendants()) do
-			table.insert(allObjects, descendant)
-		end
-	end
-	
-	for _, Object in pairs(allObjects) do
-		local Properties = GetClassProperties(Object.ClassName)
-		local ID = Object:GetAttribute"SerializerId9128"
-		
-		table.remove(Properties, #Properties)
-		for _, PropertyName in pairs(Properties) do
-			if typeof(Object[PropertyName])=="nil" or typeof(Object[PropertyName])=="Instance" then
-				local SerializedObject
-				
-				for _, serializedObject in pairs(newResult) do
-					if serializedObject[3]==ID then
-						SerializedObject = serializedObject
-					end
-				end
-				local connectedObjectID = SerializedObject[1][_]
-				
-				for _, connectedObject in pairs(allObjects) do
-					if connectedObject:GetAttribute"SerializerId9128"==connectedObjectID then
-						Object[PropertyName]=connectedObject
-					end
-				end
-			end
-		end
-	end
-end
-
-function Serializer.Deserialize(Result)
-	local Objects = {}
-	for _, SerializedObject in pairs(Result) do
-		if typeof(SerializedObject)=="table" then
-			table.insert(Objects, DeserializeObject(SerializedObject, Result) or Instance.new"StringValue")
-		else
-			table.remove(Result, _)
-		end
-	end
-	
-	ConnectObjectProperties(Result, Objects)
-	
-	return Objects
-end
 
 	function F3XImport(creation_id)
 		local creation_data;
@@ -3170,7 +3606,7 @@ end
 				creation_data=(Request or syn.request){
 					Url=ExportBaseUrl:format( creation_id ),
 					Method="GET"
-				}.Body
+				}
 			end
 		end );
 
@@ -3197,8 +3633,6 @@ end
 		    local Data = loadstring("return "..creation_data.Items[1][3])()
     		return Serializer.Deserialize(Data)
 		end)
-		print(s, newData)
-		setclipboard(creation_data.Items[1][3])
 	    if s and typeof(newData)=="table" then
 			local Container = Instance.new'Model';
 			Container.Name = 'BTExport';
@@ -3252,28 +3686,5 @@ end
 		end;
 	end
 end
--------------
-
--- F3X Export
-function F3XExport(TableOfParts)
-	local HttpService=game:GetService"HttpService"
-	local SerializedBuildData = Serialization.SerializeModel(TableOfParts);
-
-	local Response = HttpService:JSONDecode(
-		(Request or syn.request){
-			Url = 'http://f3xteam.com/bt/export',
-			Method = "POST",
-			Headers = {
-				["Content-Type"] = "application/json"
-			},
-			Body = HttpService:JSONEncode { data = SerializedBuildData, version = 3, userId = math.random(1,1000000) }
-		}
-	);
-	if Response then
-		pcall(function()setclipboard(tostring(Response.id))end)
-		return Response.id
-	end
-end
--------------
 
 return {serialize, F3XImport, F3XExport}
